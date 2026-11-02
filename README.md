@@ -36,9 +36,20 @@
 
 ## What This Does
 
+Provenance Guard gives a text-only estimate of whether a submission may be AI-generated. It combines a local language-model predictability score with a separate stylometry score, explains the result with a plain-language label, and records the decision so a writer can appeal. It cannot prove who authored text.
+
 <!-- The path a submission takes, from arriving to the label a reader sees.
      Six or seven steps — this is the trace you wrote in Milestone 1. -->
 
+1. A writer sends `text` and `creator_id` as JSON to `POST /submit`.
+2. The route checks the request and extracts the text and creator identifier. Invalid or missing input should be rejected before either signal runs.
+3. `detector.model_signal(text)` sends the text to the local detector model and produces `model_score`.
+4. `stylometry.style_signal(text)` measures patterns in the text itself and produces `style_score`.
+5. `scoring.combine_signals(...)` combines the two scores into one `guess` and `confidence`. The response also preserves both component scores so the decision can be examined.
+6. `scoring.score_to_label(...)` maps the combined result to the reader-facing `label`; `audit.log_decision(...)` records the decision and its `content_id`.
+7. The service returns the decision and scores as JSON. A writer can use `content_id` to submit an appeal; the appeal should be recorded for review, not treated as an automatic re-check.
+
+**Current implementation status:** `POST /submit` runs both signals, combines them, assigns a reader-facing label, and logs both signal scores and the combined score. `confidence` is a distance-from-uncertainty index, not a calibrated probability. `POST /appeal` records valid appeals as append-only `under_review` events.
 
 
 ---
@@ -53,35 +64,95 @@
 
 ### Signal one — the model signal
 
-**What it measures:**
+**What it measures:** A local model's estimate of how likely the submitted text is to be AI-generated. Both signal scores are normalized so that a higher score means more AI-like.
 
-**Why that might differ between human and AI writing:**
+**Why that might differ between human and AI writing:** The model may recognize statistical patterns common in the text it learned to classify. Generated text can exhibit those patterns more often than some human writing.
 
-**What it can't see:**
+**What it can't see:** It cannot observe who wrote the text or its drafting history. A score is not proof of authorship. Short, formal, edited, or formulaic human writing may look AI-like, and edited AI writing may not.
 
 ### Signal two — the style signal
 
-**What it measures:**
+**What it measures:** Sentence-length spread (coefficient of variation), type-token ratio, and punctuation per word. Low sentence-length variation, more repeated vocabulary, and less punctuation raise the normalized style score; higher means more AI-like. It measures properties of the sample, not the identity of its author.
 
-**Why that might differ between human and AI writing:**
+**Why that might differ between human and AI writing:** Generated writing can be more uniform in sentence structure and word use, while human writing may show more variation. This is only a tendency, not a rule.
 
-**What it can't see:**
+**What it can't see:** It cannot determine authorship or intent. The measures are rough and length-sensitive; genre, editing, language proficiency, and an individual writer's natural style can make human text look uniform or generated text look varied. Samples under 20 words receive a neutral style score of `0.5`.
+
+**Implementation:** For samples of 20 or more words, `style_signal` combines sentence regularity `1 − min(spread / 0.8, 1)` (40%), vocabulary repetition `clamp((1 − type_token_ratio) / 0.6, 0, 1)` (40%), and punctuation simplicity `1 − min(punctuation_density / 0.15, 1)` (20%). A one-sentence sample uses neutral sentence regularity (`0.5`).
+
+### False-positive trace
+
+Consider a real writer whose own polished prose receives a model score of `0.88` and a style score of `0.62`. This is a hypothetical trace to make the policy concrete, not a measured submission. The signals differ by `0.26`, below the disagreement cutoff, so the rule gives `0.75 × 0.88 + 0.25 × 0.62 = 0.815`. That crosses the `0.65` AI threshold. The reader-facing label is **“We think this was probably written by AI, but this estimate is not proof of authorship.”** The writer can submit the returned `content_id` and an explanation to `POST /appeal`; the response confirms `under_review` and the appeal is appended to the audit log.
+
+**What exists today:** `/submit` calculates and logs the scores and returns the mapped label. `/appeal` appends an `under_review` event for a valid submission ID; the original decision remains unchanged in the append-only audit log. The confidence field is a distance-from-uncertainty index, not a calibrated probability.
+
+### Endpoint contracts
+
+The implemented signal and combined scores are bounded to `[0, 1]`. Both signal scores use the direction defined above.
+
+#### `POST /submit`
+
+Request JSON:
+
+| Field | Type | Requirement |
+|---|---|---|
+| `text` | string | Required; non-empty after trimming whitespace; at most 20,000 characters as submitted. |
+| `creator_id` | string | Required; 1–128 characters after trimming whitespace. |
+
+Success response (`200`, JSON):
+
+| Field | Type | Meaning |
+|---|---|---|
+| `content_id` | string | Identifier for this submission; required to appeal it. |
+| `guess` | string | One of `human`, `unsure`, or `ai`. |
+| `confidence` | number | Confidence associated with the guess, from `0` to `1`; it is not proof of authorship. |
+| `label` | string | Exact reader-facing wording returned by the score mapping; see **Label Variants**. |
+| `model_score` | number | Model signal score, from `0` to `1`. |
+| `style_score` | number | Style signal score, from `0` to `1`. |
+| `combined_score` | number | Weighted score after applying the disagreement rule, from `0` to `1`. |
+
+Malformed JSON or missing/invalid required fields should return `400`; text exceeding 20,000 characters should return `413`. Error responses should be JSON with an `error` code and a readable `message`.
+
+#### `POST /appeal`
+
+Request JSON:
+
+| Field | Type | Requirement |
+|---|---|---|
+| `content_id` | string | Required; must identify an existing submission. |
+| `reasoning` | string | Required; non-empty explanation from the writer. |
+
+Success response (`200`, JSON):
+
+| Field | Type | Meaning |
+|---|---|---|
+| `content_id` | string | The appealed submission. |
+| `status` | string | `under_review` after the appeal is recorded. |
+| `message` | string | Confirmation that the appeal was recorded. |
+
+Malformed JSON or missing/invalid required fields should return `400`; an unknown `content_id` should return `404`. The response must not imply that an appeal automatically changed the detector's score or verdict.
+
+A second appeal for a submission that already has an appeal returns `409` and does not append another appeal event.
 
 ### The combining rule
 
 <!-- Write the rule in words, then give the numbers. What happens when the two
      signals disagree? -->
 
-**The rule:**
+**The rule:** Compute the weighted average of the model and style scores. If they differ by at least `0.40`, return `0.50` (the uncertain midpoint) instead. A disagreement is evidence to withhold a confident claim, not a reason to choose one signal.
 
-**The numbers:**
+**The numbers:** `0.75 × model_score + 0.25 × style_score`; disagreement cutoff `0.40`; human threshold `0.35`; AI threshold `0.65`. The current `confidence` is `2 × |combined_score − 0.50|`; it expresses distance from uncertainty, not a calibrated probability.
+
+**Why these numbers:** The detector score is the more direct signal, so it gets three quarters of the weight. The text-only style heuristic is comparatively easy to shift through editing or genre, so it gets one quarter. A disagreement of 0.40 is large enough that averaging could hide material conflict; sending that case to the midpoint avoids a high-confidence claim. The wide `0.35`–`0.65` unsure band also favors avoiding false accusations.
+
+**Order note:** The initial scoring implementation was written before this rule was documented. The rule is now explicit, matches the implementation, and has been checked against weighted-average and disagreement examples; the original write-before-code order cannot be restored retroactively.
 
 **Where it lives:** `scoring.py::combine_signals`
 
 <!-- ⚠️ The grader checks your code against that line. If your rule lives
      somewhere else, say where. -->
 
-**A case where my two signals split, and what my rule does with it:**
+**A case where my two signals split, and what my rule does with it:** On the generated-style sample, model score was `0.7434` and style score was `0.4185`, a `0.3249` gap. It is below the `0.40` disagreement cutoff, so the weighted score is `0.6622` and the provisional guess is `ai`. If a gap reaches `0.40`, the rule returns `0.50` and `unsure`.
 
 
 
@@ -96,16 +167,12 @@
 
 | Label | Score range | The exact text a reader sees |
 |---|---|---|
-| high-confidence human |  |  |
-| unsure |  |  |
-| high-confidence AI |  |  |
+| high-confidence human | `0.00–0.35` inclusive | “We think this was probably written by a person.” |
+| unsure | above `0.35` and below `0.65` | “We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.” |
+| high-confidence AI | `0.65–1.00` inclusive | “We think this was probably written by AI, but this estimate is not proof of authorship.” |
 
 **Why I worded the "unsure" one this way:**
-<!-- It's the hardest of the three. It has to admit uncertainty without
-     sounding like an accusation, because the person reading it may well have
-     written every word themselves. -->
-
-
+It says plainly that the system cannot determine authorship and explicitly tells an innocent writer that the result is not an accusation.
 
 ---
 
@@ -116,41 +183,105 @@
 
 **A submission**
 
-<!-- The response needs content_id, guess, confidence, label, AND both
-     signal scores - model_score and style_score. Unit 8's tools read those
-     two off the response, so leaving them out costs you next unit's
-     diagnostics. -->
+Port `5000` was occupied on the machine used for this run, so the service was
+started on port `5055`.
+
+The detector was run by itself before it was wired into the route. Its
+standalone model scores are shown below alongside the results from later
+submitting the same three texts through the two-signal endpoint:
+
+| Same three samples | Model score | Style score | Combined score | Guess |
+|---|---:|---:|---:|---|
+| Generated-style: “The proposed solution offers a comprehensive framework for addressing modern challenges. It provides a structured approach that supports consistent results across a range of applications. Each component contributes to the overall effectiveness of the system, ensuring that the objectives are achieved in a reliable and efficient manner.” | `0.7434` | `0.4185` | `0.6622` | `ai` |
+| Human-written starter documentation: “Before your first class, create a virtual environment, install the requirements, and run the test script. You are ready when it passes. Start the server in one terminal and send a request from another terminal.” | `0.5963` | `0.2753` | `0.5161` | `unsure` |
+| Borderline wording: “The service works feature by feature and breaks at the seams. So write the path down first, in plain English, on paper. Then check which parts connect, and make sure the person using it can see what happened.” | `0.3468` | `0.3738` | `0.3536` | `unsure` |
+
+These are signal outputs, not proof of authorship. On the first sample, the
+model signal leaned AI while the style signal was lower; on the second, the
+model leaned higher while the style signal leaned lower. Both splits are
+preserved in the combined score rather than hidden.
+
+The four calibration submissions used the same route and ran both signals:
+
+| Deliberate input | Model score | Style score | Combined score | Guess and exact label |
+|---|---:|---:|---:|---|
+| Clearly AI: “The proposed solution offers a comprehensive framework for addressing modern challenges. It provides a structured approach that supports consistent results across a range of applications. Each component contributes to the overall effectiveness of the system, ensuring that the objectives are achieved in a reliable and efficient manner.” | `0.7434` | `0.4185` | `0.6622` | `ai` — “We think this was probably written by AI, but this estimate is not proof of authorship.” |
+| Clearly human: “Before your first class, create a virtual environment, install the requirements, and run the test script. You are ready when it passes. Start the server in one terminal and send a request from another terminal.” | `0.5963` | `0.2753` | `0.5161` | `unsure` — “We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.” |
+| Formal human: “An acceptance criterion says what 'working' means, specifically enough that someone else could check it. Not 'the detector is accurate' — that's an opinion, and perfect AI detection isn't possible anyway. 'Of 10 pieces I wrote myself, at most 1 is labeled high-confidence AI' — that's a criterion.” | `0.1793` | `0.4199` | `0.2394` | `human` — “We think this was probably written by a person.” |
+| Lightly edited AI: “The proposed approach gives a broad framework for tackling modern challenges. It offers an organized method that can produce consistent outcomes in many applications. Every part supports overall effectiveness and helps meet its goals in a reliable, efficient way.” | `0.2723` | `0.4205` | `0.3094` | `human` — “We think this was probably written by a person.” |
+
+The lightly edited AI sample is a miss: both measurements lean human, so the
+combined score stays below the human threshold. Looking at the signals
+separately explains the miss: the model score is low (`0.2723`), while the
+style score (`0.4205`) is only mildly above the midpoint. The model signal
+drives the human guess. That is a diagnostic result, not a reason to move the
+thresholds after seeing the test.
 
 ```bash
-$ curl -X POST http://127.0.0.1:5000/submit \
+$ curl -X POST http://127.0.0.1:5055/submit \
   -H "Content-Type: application/json" \
-  -d '{"text": "...", "creator_id": "..."}'
+  -d '{"text": "The proposed solution offers a comprehensive framework for addressing modern challenges. It provides a structured approach that supports consistent results across a range of applications. Each component contributes to the overall effectiveness of the system, ensuring that the objectives are achieved in a reliable and efficient manner.", "creator_id": "milestone5-sample-final"}'
 ```
 
 ```json
-
+{
+  "combined_score": 0.6622,
+  "confidence": 0.3244,
+  "content_id": "04cd1efd-8ced-498f-95b5-2864e9fd5d20",
+  "guess": "ai",
+  "label": "We think this was probably written by AI, but this estimate is not proof of authorship.",
+  "model_score": 0.7434,
+  "style_score": 0.4185
+}
 ```
 
 **An appeal**
 
 ```bash
-$ curl -X POST http://127.0.0.1:5000/appeal \
+$ curl -X POST http://127.0.0.1:5055/appeal \
   -H "Content-Type: application/json" \
-  -d '{"content_id": "...", "reasoning": "..."}'
+  -d '{"content_id": "04cd1efd-8ced-498f-95b5-2864e9fd5d20", "reasoning": "I wrote this text myself. Please review the automated estimate."}'
 ```
 
 ```json
-
+{
+  "content_id": "04cd1efd-8ced-498f-95b5-2864e9fd5d20",
+  "message": "Your appeal has been recorded for review.",
+  "status": "under_review"
+}
 ```
 
 **What the log shows afterwards**
 
 ```bash
-$ curl "http://127.0.0.1:5000/log?limit=3"
+$ curl "http://127.0.0.1:5055/log?limit=2"
 ```
 
 ```json
-
+{
+  "count": 2,
+  "entries": [
+    {
+      "combined_score": 0.6622,
+      "content_id": "04cd1efd-8ced-498f-95b5-2864e9fd5d20",
+      "creator_id": "milestone5-sample-final",
+      "guess": "ai",
+      "label": "We think this was probably written by AI, but this estimate is not proof of authorship.",
+      "model_score": 0.7434,
+      "status": "decided",
+      "style_score": 0.4185,
+      "timestamp": "2026-11-02T05:41:34+00:00"
+    },
+    {
+      "content_id": "04cd1efd-8ced-498f-95b5-2864e9fd5d20",
+      "creator_id": "milestone5-sample-final",
+      "event": "appeal",
+      "reasoning": "I wrote this text myself. Please review the automated estimate.",
+      "status": "under_review",
+      "timestamp": "2026-11-02T05:41:39+00:00"
+    }
+  ]
+}
 ```
 
 ---
@@ -159,15 +290,15 @@ $ curl "http://127.0.0.1:5000/log?limit=3"
 
 **Moment 1**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* Trace the starter's submission flow, identify what the detector and planned style signal can and cannot tell, and specify both endpoint contracts before implementing them.
+- *What came back:* A seven-step intended request path, signal blind spots, false-positive scenario, and proposed request/response fields. The initial explanation treated the desired flow as if it were already implemented.
+- *What I changed:* I checked the actual route and audit helpers, then made the README distinguish planned behavior from runtime behavior. I also made the false-positive example explicitly hypothetical and recorded that labels and appeal were not working yet at that stage.
 
 **Moment 2**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* Implement and test a second, text-only signal and combine it with the model signal, preserving both component scores in the response and audit log.
+- *What came back:* Implementations for sentence-length spread, type-token ratio, punctuation density, a normalized style score, and a weighted combiner with a disagreement-to-uncertain rule; plus measured sample outputs.
+- *What I changed:* I checked the standalone detector and stylometry outputs and the live endpoint/log results, documented the weights and blind spots, and kept the lightly edited AI false negative visible rather than tuning the threshold to hide it. I also noted that the combining rule was documented after its first implementation, not before.
 
 <!-- ═══════════════════════ UNIT 8 — THE TEST ═══════════════════════ -->
 
@@ -308,6 +439,8 @@ that produced it:
        [ ] Sample Run: a submission AND an appeal, as pasted text
        [ ] At least four new commits
        [ ] Repository URL submitted — WRITE IT DOWN
+
+**Fork repository URL:** https://github.com/aphan135/ai201-project4-provenance-guard-starter-v2026
 
      SUBMISSION CHECKLIST — unit 8
 
