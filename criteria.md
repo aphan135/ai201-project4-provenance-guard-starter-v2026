@@ -44,61 +44,51 @@ Two things worth knowing before you pick numbers:
 ---
 ## 1.
 
-<!-- Your criterion. It must name a number. -->
-
-
+Across three evaluation trials, no more than 1 of 10 separate pieces of my own writing may receive the high-confidence AI label in any trial.
 
 **Why this target:**
 
-
+I allow at most one false positive because a mistaken accusation can harm a real writer. Requiring the target in every trial keeps a favorable run from hiding an inconsistent result.
 
 ---
 
 ## 2.
 
-<!-- Your criterion. -->
-
-
+Across three evaluation trials, the mean combined score for five texts I judge clearly AI-generated must be at least 0.20 higher than the mean combined score for five pieces of my own writing in each trial.
 
 **Why this target:**
 
-
+The scores need to separate the two groups by a visible margin, not merely rank one example above another. A 0.20 gap is a meaningful target on a 0–1 scale while recognizing that neither signal can prove authorship.
 
 ---
 
 ## 3.
 
-<!-- Your criterion. -->
-
-
+In each of three evaluation trials, at least one test submission must receive each of the three labels: high-confidence human, unsure, and high-confidence AI.
 
 **Why this target:**
 
-
+Every label needs to be reachable or it cannot serve its intended purpose. Checking all three in every trial also tests whether the label boundaries behave consistently.
 
 ---
 
 ## 4.
 
-<!-- Your criterion. -->
-
-
+For a valid appeal against an existing `content_id`, the response must confirm `under_review` and the audit log must contain exactly one appeal record for that content; an appeal using an unknown ID must return `404` and create no appeal record.
 
 **Why this target:**
 
-
+An appeal is meaningful only if it is acknowledged and leaves a reviewable record. Checking the unknown-ID case guards against telling a writer an appeal succeeded when their submission was not found. I will check this criterion by submitting and appealing a real `content_id`, then inspecting the response and log.
 
 ---
 
 ## 5.
 
-<!-- Your criterion. -->
-
-
+Requests with missing, null, empty, whitespace-only, or over-20,000-character `text` must not be scored: the first four must return `400`, the oversized request must return `413`, and none may create a decision entry in the audit log.
 
 **Why this target:**
 
-
+Rejecting malformed and oversized input before scoring gives callers a clear result and avoids spending model work on requests the service cannot use. Checking the audit log makes sure rejected requests are not mistaken for completed decisions.
 
 ---
 
