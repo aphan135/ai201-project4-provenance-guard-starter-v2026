@@ -82,11 +82,49 @@ Provenance Guard gives a text-only estimate of whether a submission may be AI-ge
 
 ### False-positive trace
 
-Consider a real writer whose own polished prose receives a model score of `0.88` and a style score of `0.62`. This is a hypothetical trace to make the policy concrete, not a measured submission. The signals differ by `0.26`, below the disagreement cutoff, so the rule gives `0.75 × 0.88 + 0.25 × 0.62 = 0.815`. That crosses the `0.65` AI threshold. The reader-facing label is **“We think this was probably written by AI, but this estimate is not proof of authorship.”** The writer can submit the returned `content_id` and an explanation to `POST /appeal`; the response confirms `under_review` and the appeal is appended to the audit log.
+**Measured false positive:** I submitted the following text, assembled from my own follow-up messages in this conversation. The words and spelling are mine; only separators and punctuation were added, and copied assignment text was excluded:
+
+> did u do everything i ask for? yes or no. do everything right now. ok skip it then. wait for milestone 4 what is left to do? do it fo rme. check all from milestone 1 to 4 has been completed. Did you do everything from milestone 1 to 4? wait so yes or no have u finish what i ask for. then finish it for me. did u do everything i ask for? then finish it for me. do everything. did u do everything i ask for? do everything right now. complete it then. do everything from milestone 1 to 6. Did you do everything?
+
+The model score was `0.7335` and the style score was `0.5654`; their difference (`0.1681`) is below the `0.40` disagreement cutoff. The weighted result, `0.75 × 0.7335 + 0.25 × 0.5654 = 0.691475`, rounded to `0.6915`, with `confidence: 0.383`. That is above the `0.65` AI threshold, so the response labeled it **“We think this was probably written by AI, but this estimate is not proof of authorship.”** This is an observed false positive on this human-authored chat text, not evidence that the detector will flag every writer or genre.
+
+The decision's `content_id` was `6472f179-7f12-40ed-98ba-92b171d103c0`. I appealed with an explanation that I wrote the messages. `POST /appeal` returned `status: under_review`; `GET /log?limit=2` showed the original decision and its appeal event. The append-only log keeps the original decision as `decided` and records review status on the separate appeal entry.
+
+```json
+{
+  "content_id": "6472f179-7f12-40ed-98ba-92b171d103c0",
+  "message": "Your appeal has been recorded for review.",
+  "status": "under_review"
+}
+```
+
+The corresponding log entries:
+
+```json
+[
+  {
+    "combined_score": 0.6915,
+    "content_id": "6472f179-7f12-40ed-98ba-92b171d103c0",
+    "creator_id": "human-authored-chat-messages",
+    "guess": "ai",
+    "label": "We think this was probably written by AI, but this estimate is not proof of authorship.",
+    "model_score": 0.7335,
+    "status": "decided",
+    "style_score": 0.5654
+  },
+  {
+    "content_id": "6472f179-7f12-40ed-98ba-92b171d103c0",
+    "creator_id": "human-authored-chat-messages",
+    "event": "appeal",
+    "reasoning": "I wrote these exact follow-up messages myself. They were combined only for this test, so the AI label is a false positive. Please review the decision.",
+    "status": "under_review"
+  }
+]
+```
 
 **What exists today:** `/submit` calculates and logs the scores and returns the mapped label. `/appeal` appends an `under_review` event for a valid submission ID; the original decision remains unchanged in the append-only audit log. The confidence field is a distance-from-uncertainty index, not a calibrated probability.
 
-**Measured human-authored check:** I also submitted an 87-word excerpt joined verbatim from my own earlier chat messages (only separators were added). It scored `model_score: 0.6305`, `style_score: 0.5916`, and `combined_score: 0.6208`, so it received the unsure label: **“We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.”** This is an observed human-authored example, but not a false positive. The `human-author-chat-excerpt` audit entry was based on a normalized paraphrase, so it should not be treated as ground-truth evidence; the verbatim run is the valid check.
+**Additional measured human-authored check:** An 87-word excerpt joined verbatim from my earlier chat messages scored `model_score: 0.6305`, `style_score: 0.5916`, and `combined_score: 0.6208`, receiving the unsure label: **“We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.”** The `human-author-chat-excerpt` audit entry was based on a normalized paraphrase and is not ground-truth evidence; the verbatim measured runs above are the valid checks.
 
 ### Endpoint contracts
 
