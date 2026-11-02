@@ -324,6 +324,8 @@ $ curl "http://127.0.0.1:5055/log?limit=2"
 }
 ```
 
+**Validation:** `python test.py` passed all 9 checks in a Python `3.13.13` virtual environment. This is the starter's environment-readiness check; it is not a three-trial evaluation of the acceptance criteria.
+
 ---
 
 ## How I Used AI
@@ -332,7 +334,7 @@ $ curl "http://127.0.0.1:5055/log?limit=2"
 
 - *What I asked for:* Trace the starter's submission flow, identify what the detector and planned style signal can and cannot tell, and specify both endpoint contracts before implementing them.
 - *What came back:* A seven-step intended request path, signal blind spots, false-positive scenario, and proposed request/response fields. The initial explanation treated the desired flow as if it were already implemented.
-- *What I changed:* I checked the actual route and audit helpers, then made the README distinguish planned behavior from runtime behavior. I also made the false-positive example explicitly hypothetical and recorded that labels and appeal were not working yet at that stage.
+- *What I changed:* I checked the actual route and audit helpers, then made the README distinguish planned behavior from runtime behavior. I initially marked the false-positive walkthrough as hypothetical; later I replaced it with a measured false-positive run and its appeal record. I also recorded that labels and appeals were not working yet at that earlier stage.
 
 **Moment 2**
 
