@@ -86,6 +86,8 @@ Consider a real writer whose own polished prose receives a model score of `0.88`
 
 **What exists today:** `/submit` calculates and logs the scores and returns the mapped label. `/appeal` appends an `under_review` event for a valid submission ID; the original decision remains unchanged in the append-only audit log. The confidence field is a distance-from-uncertainty index, not a calibrated probability.
 
+**Measured human-authored check:** I also submitted a 87-word excerpt joined verbatim from my own earlier chat messages (only separators were added). It scored `model_score: 0.6305`, `style_score: 0.5916`, and `combined_score: 0.6208`, so it received the unsure label: **“We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.”** This is an observed human-authored example, but not a false positive. The `human-author-chat-excerpt` audit entry was based on a normalized paraphrase, so it should not be treated as ground-truth evidence; the verbatim run is the valid check.
+
 ### Endpoint contracts
 
 The implemented signal and combined scores are bounded to `[0, 1]`. Both signal scores use the direction defined above.
