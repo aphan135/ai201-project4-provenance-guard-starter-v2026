@@ -86,7 +86,7 @@ Provenance Guard gives a text-only estimate of whether a submission may be AI-ge
 
 > did u do everything i ask for? yes or no. do everything right now. ok skip it then. wait for milestone 4 what is left to do? do it fo rme. check all from milestone 1 to 4 has been completed. Did you do everything from milestone 1 to 4? wait so yes or no have u finish what i ask for. then finish it for me. did u do everything i ask for? then finish it for me. do everything. did u do everything i ask for? do everything right now. complete it then. do everything from milestone 1 to 6. Did you do everything?
 
-The model score was `0.7335` and the style score was `0.5654`; their difference (`0.1681`) is below the `0.40` disagreement cutoff. The weighted result, `0.75 × 0.7335 + 0.25 × 0.5654 = 0.691475`, rounded to `0.6915`, with `confidence: 0.383`. That is above the `0.65` AI threshold, so the response labeled it **“We think this was probably written by AI, but this estimate is not proof of authorship.”** This is an observed false positive on this human-authored chat text, not evidence that the detector will flag every writer or genre.
+At the original `0.65` AI threshold, the model score was `0.7335` and the style score was `0.5654`; their difference (`0.1681`) is below the `0.40` disagreement cutoff. The weighted result, `0.75 × 0.7335 + 0.25 × 0.5654 = 0.691475`, rounded to `0.6915`, with `confidence: 0.383`. That original threshold labeled it AI. At the revised `0.75` threshold it is now unsure. This is an observed false positive on this human-authored chat text, not evidence that the detector will flag every writer or genre.
 
 The decision's `content_id` was `6472f179-7f12-40ed-98ba-92b171d103c0`. I appealed with an explanation that I wrote the messages. `POST /appeal` returned `status: under_review`; `GET /log?limit=2` showed the original decision and its appeal event. The append-only log keeps the original decision as `decided` and records review status on the separate appeal entry.
 
@@ -181,9 +181,9 @@ A second appeal for a submission that already has an appeal returns `409` and do
 
 **The rule:** Compute the weighted average of the model and style scores. If they differ by at least `0.40`, return `0.50` (the uncertain midpoint) instead. A disagreement is evidence to withhold a confident claim, not a reason to choose one signal.
 
-**The numbers:** `0.75 × model_score + 0.25 × style_score`; disagreement cutoff `0.40`; human threshold `0.35`; AI threshold `0.65`. The current `confidence` is `2 × |combined_score − 0.50|`; it expresses distance from uncertainty, not a calibrated probability.
+**The numbers:** `0.75 × model_score + 0.25 × style_score`; disagreement cutoff `0.40`; human threshold `0.35`; current AI threshold `0.75` (raised from `0.65` in Milestone 5). The current `confidence` is `2 × |combined_score − 0.50|`; it expresses distance from uncertainty, not a calibrated probability.
 
-**Why these numbers:** The detector score is the more direct signal, so it gets three quarters of the weight. The text-only style heuristic is comparatively easy to shift through editing or genre, so it gets one quarter. A disagreement of 0.40 is large enough that averaging could hide material conflict; sending that case to the midpoint avoids a high-confidence claim. The wide `0.35`–`0.65` unsure band also favors avoiding false accusations.
+**Why these numbers:** The detector score is the more direct signal, so it gets three quarters of the weight. The text-only style heuristic is comparatively easy to shift through editing or genre, so it gets one quarter. A disagreement of 0.40 is large enough that averaging could hide material conflict; sending that case to the midpoint avoids a high-confidence claim. The current `0.35`–`0.75` unsure band favors avoiding false accusations, at the cost of fewer high-confidence AI labels.
 
 **Order note:** The initial scoring implementation was written before this rule was documented. The rule is now explicit, matches the implementation, and has been checked against weighted-average and disagreement examples; the original write-before-code order cannot be restored retroactively.
 
@@ -208,8 +208,8 @@ A second appeal for a submission that already has an appeal returns `409` and do
 | Label | Score range | The exact text a reader sees |
 |---|---|---|
 | high-confidence human | `0.00–0.35` inclusive | “We think this was probably written by a person.” |
-| unsure | above `0.35` and below `0.65` | “We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.” |
-| high-confidence AI | `0.65–1.00` inclusive | “We think this was probably written by AI, but this estimate is not proof of authorship.” |
+| unsure | above `0.35` and below `0.75` | “We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.” |
+| high-confidence AI | `0.75–1.00` inclusive | “We think this was probably written by AI, but this estimate is not proof of authorship.” |
 
 **Why I worded the "unsure" one this way:**
 It says plainly that the system cannot determine authorship and explicitly tells an innocent writer that the result is not an accusation.
@@ -342,30 +342,34 @@ $ curl "http://127.0.0.1:5055/log?limit=2"
 - *What came back:* Implementations for sentence-length spread, type-token ratio, punctuation density, a normalized style score, and a weighted combiner with a disagreement-to-uncertain rule; plus measured sample outputs.
 - *What I changed:* I checked the standalone detector and stylometry outputs and the live endpoint/log results, documented the weights and blind spots, and kept the lightly edited AI false negative visible rather than tuning the threshold to hide it. I also noted that the combining rule was documented after its first implementation, not before.
 
+**Moment 3**
+
+- *What I asked for:* Run the provided attack set and my five criteria, diagnose the misses, then make one measured improvement and repeat both runs.
+- *What came back:* The recorded results showed false-positive human examples labeled AI, evasion examples that did not reach the AI band, accepted malformed text, and a negative score-separation gap. After comparing the before results, I chose to raise `AI_THRESHOLD` from `0.65` to `0.75` as the single change.
+- *What I changed:* I verified the before/after reports and documented the observed trade: false-positive attack labels fell from three to zero, while label coverage fell from three labels to two. I left the criteria and scenarios unchanged during the comparison, and did not invent personal-writing samples.
+
 <!-- ═══════════════════════ UNIT 8 — THE TEST ═══════════════════════ -->
 
 ---
 
 ## Rate Limiting
 
-**My limits:** ___ per minute, ___ per day
+**My limits:** 5 per minute, 100 per day
 
 **Why those numbers and not others:**
-<!-- Think about two people: a real writer submitting their own work a few
-     times an hour, and a script sending a thousand variations to map your
-     thresholds. Your numbers have to be liveable for the first and hostile to
-     the second. -->
+A writer can submit several drafts in an hour without hitting the limit.
+Five submissions per minute stops a rapid threshold-mapping burst, while the
+100-per-day cap keeps a script from spreading that burst across the day.
 
-**What a caller counts as:** <!-- per address, or per creator_id? They fail
-differently — one script can look like a thousand callers, and one household
-can look like one. -->
+**What a caller counts as:** A `creator_id`; requests without a usable ID fall
+back to the caller's address.
 
 **The run of status codes when I pushed past it:**
 
 <!-- python run_attacks.py --flood 15 -->
 
 ```
-
+200 200 200 200 200 429 429 429 429 429 429 429 429 429 429
 ```
 
 ---
@@ -375,19 +379,138 @@ can look like one. -->
 <!-- Every attack with its outcome and a held-or-broke mark.
      `run_attacks.py --label before` produces the table. -->
 
+Ran all 56 inputs from `attack_set/` against `POST /submit`. **39 held; 17
+broke.** The detailed per-input verdicts and scores are in
+[`results/attack_run_2026-11-04_1819_before.md`](./results/attack_run_2026-11-04_1819_before.md).
 
+**Verdict assumptions:** I treated each CSV `targets` description as the
+intended outcome. An evasion is BROKE if it did not receive the high-confidence
+AI label; a false-positive case is BROKE if it did receive that label; malformed
+text is BROKE if it was accepted and scored; and flood requests are HELD when
+the limiter returns 429. Prompt-injection cases are HELD when the text is
+handled as ordinary text and does not alter the service response or log format.
+These are judgments against the attack set's stated goals, not claims that a
+text's true author can be independently established.
 
 **Ten audit log entries from the run**
 
 <!-- Choose entries that show the interesting failures, not the ten easiest. -->
 
 ```json
-
+[
+  {
+    "combined_score": 0.231,
+    "content_id": "28c8cd50-4303-4def-bcb8-c7e990e2c060",
+    "creator_id": "attacker_EV01",
+    "guess": "human",
+    "label": "We think this was probably written by a person.",
+    "model_score": 0.1635,
+    "status": "decided",
+    "style_score": 0.4334,
+    "timestamp": "2026-11-05T02:18:48+00:00"
+  },
+  {
+    "combined_score": 0.571,
+    "content_id": "d99e9392-cded-485a-9d0b-8f173001124e",
+    "creator_id": "attacker_EV03",
+    "guess": "unsure",
+    "label": "We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.",
+    "model_score": 0.6662,
+    "status": "decided",
+    "style_score": 0.2852,
+    "timestamp": "2026-11-05T02:18:48+00:00"
+  },
+  {
+    "combined_score": 0.6871,
+    "content_id": "1efe7444-da41-44a8-ac2f-b393cab1d862",
+    "creator_id": "attacker_FP02",
+    "guess": "ai",
+    "label": "We think this was probably written by AI, but this estimate is not proof of authorship.",
+    "model_score": 0.7387,
+    "status": "decided",
+    "style_score": 0.5325,
+    "timestamp": "2026-11-05T02:18:54+00:00"
+  },
+  {
+    "combined_score": 0.7309,
+    "content_id": "90963e37-afa7-4bf9-879a-b72d62e7cfa1",
+    "creator_id": "attacker_FP03",
+    "guess": "ai",
+    "label": "We think this was probably written by AI, but this estimate is not proof of authorship.",
+    "model_score": 0.8051,
+    "status": "decided",
+    "style_score": 0.5082,
+    "timestamp": "2026-11-05T02:18:54+00:00"
+  },
+  {
+    "combined_score": 0.7419,
+    "content_id": "624d329b-233c-49a0-9376-32d2e8fc28aa",
+    "creator_id": "attacker_FP05",
+    "guess": "ai",
+    "label": "We think this was probably written by AI, but this estimate is not proof of authorship.",
+    "model_score": 0.8005,
+    "status": "decided",
+    "style_score": 0.5663,
+    "timestamp": "2026-11-05T02:18:55+00:00"
+  },
+  {
+    "combined_score": 0.5,
+    "content_id": "ad25a0d1-52dd-48ea-9ced-607b88bdd1e3",
+    "creator_id": "attacker_MF03",
+    "guess": "unsure",
+    "label": "We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.",
+    "model_score": 0.0,
+    "status": "decided",
+    "style_score": 0.5,
+    "timestamp": "2026-11-05T02:18:58+00:00"
+  },
+  {
+    "creator_id": "attacker_RQ01",
+    "error": "invalid_text",
+    "event": "rejected",
+    "http_status": 400,
+    "reason": "invalid_text",
+    "status": "rejected",
+    "timestamp": "2026-11-05T02:19:06+00:00"
+  },
+  {
+    "creator_id": "unknown",
+    "event": "rejected",
+    "limit": "5 per 1 minute",
+    "reason": "rate_limited",
+    "status": "rejected",
+    "timestamp": "2026-11-05T02:19:06+00:00"
+  },
+  {
+    "combined_score": 0.5,
+    "content_id": "135256bc-4d5d-42d0-8bd6-944b0fb5c296",
+    "creator_id": "attacker_flood",
+    "guess": "unsure",
+    "label": "We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.",
+    "model_score": 0.0287,
+    "status": "decided",
+    "style_score": 0.5,
+    "timestamp": "2026-11-05T02:19:06+00:00"
+  },
+  {
+    "creator_id": "attacker_flood",
+    "event": "rejected",
+    "limit": "5 per 1 minute",
+    "reason": "rate_limited",
+    "status": "rejected",
+    "timestamp": "2026-11-05T02:19:07+00:00"
+  }
+]
 ```
 
 **The single worst outcome** — the one I'd least want to explain to a writer
 whose work got caught by it:
 
+FP03: the carefully written non-native English submission was labeled AI. It
+received `model_score: 0.8051`, `style_score: 0.5082`, and `combined_score:
+0.7309` (confidence `0.462`). This is the most serious false positive in the run:
+a real writer could reasonably experience that label as an accusation, even
+though the response says it is not proof.
 
 
 ---
@@ -398,17 +521,357 @@ whose work got caught by it:
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. My own writing flagged as AI | ≤ 1 of 10 | N/A | N/A | N/A | UNMEASURED — no personal samples |
+| 2. Score separation (known-human attack-set substitute) | AI mean − human mean ≥ 0.20 | -0.2147 | -0.2147 | -0.2147 | MISSED (substitute; not personal writing) |
+| 3. All three labels reachable | 3 of 3 | 3/3 | 3/3 | 3/3 | MET |
+| 4. Appeal lifecycle | Valid: under_review + 1 log; unknown: 404 + 0 log | Pass | Pass | Pass | MET |
+| 5. Invalid text rejected, not decided, and logged | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
 
-**Real output from one trial**, pasted as text, naming the file and function
-that produced it:
+The three trials used the same scenarios without changes. Criterion 1 is
+unmeasured because I have no personal writing samples to test. For criterion 2,
+I used the substitute I approved: five AI-evasion inputs and five known-human
+false-positive inputs from the provided attack set. Their means were 0.4317
+(AI-evasion) and 0.6464 (known human), a -0.2147 gap in each trial; these are
+not my own writing, so this does not establish criterion 2 as originally
+written.
+
+Criterion 1 remains **UNMEASURED**, not assumed to pass: no personal writing
+samples were available. Attack-set text or newly generated proxy text cannot
+honestly stand in for writing I personally authored.
+
+The following are the actual Trial 1 outputs recorded by `run_eval.py::main` in [the full run report](./results/run_2026-11-11_1124_before.md). The service responses are from `app.py::submit`.
+
+### Criterion 1 — My Own Writing
+
+```text
+UNMEASURED: No user-authored writing samples were available; this criterion requires the user's own work.
+```
+
+### Criterion 2 — Attack-Set Score Separation
 
 ```json
+[
+  {
+    "status": 200,
+    "guess": "human",
+    "confidence": 0.538,
+    "model_score": 0.1635,
+    "style_score": 0.4334,
+    "combined_score": 0.231,
+    "label": "We think this was probably written by a person.",
+    "sent": "The importance of effective communication in the workplace cannot be o",
+    "group": "AI-generated evasion inputs"
+  },
+  {
+    "status": 200,
+    "guess": "unsure",
+    "confidence": 0.0,
+    "model_score": 0.5943,
+    "style_score": 0.1172,
+    "combined_score": 0.5,
+    "label": "We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.",
+    "sent": "The importance of effective communication in the workplace cannot be o",
+    "group": "AI-generated evasion inputs"
+  },
+  {
+    "status": 200,
+    "guess": "unsure",
+    "confidence": 0.142,
+    "model_score": 0.6662,
+    "style_score": 0.2852,
+    "combined_score": 0.571,
+    "label": "We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.",
+    "sent": "The importance of effective communication in the workplace cannot be o",
+    "group": "AI-generated evasion inputs"
+  },
+  {
+    "status": 200,
+    "guess": "unsure",
+    "confidence": 0.1232,
+    "model_score": 0.6114,
+    "style_score": 0.4122,
+    "combined_score": 0.5616,
+    "label": "We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.",
+    "sent": "The importance of efficacious communication in the workplace cannot be",
+    "group": "AI-generated evasion inputs"
+  },
+  {
+    "status": 200,
+    "guess": "human",
+    "confidence": 0.4098,
+    "model_score": 0.3212,
+    "style_score": 0.2168,
+    "combined_score": 0.2951,
+    "label": "We think this was probably written by a person.",
+    "sent": "Communication at work matters more than people say it does \u2014 and I mea",
+    "group": "AI-generated evasion inputs"
+  },
+  {
+    "status": 200,
+    "guess": "unsure",
+    "confidence": 0.1442,
+    "model_score": 0.6175,
+    "style_score": 0.436,
+    "combined_score": 0.5721,
+    "label": "We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.",
+    "sent": "We got to the campsite about four. The pitch was fine, a bit sloped, b",
+    "group": "known-human inputs"
+  },
+  {
+    "status": 200,
+    "guess": "ai",
+    "confidence": 0.3742,
+    "model_score": 0.7387,
+    "style_score": 0.5325,
+    "combined_score": 0.6871,
+    "label": "We think this was probably written by AI, but this estimate is not proof of authorship.",
+    "sent": "This report sets out the findings of the working group. The group met ",
+    "group": "known-human inputs"
+  },
+  {
+    "status": 200,
+    "guess": "ai",
+    "confidence": 0.4618,
+    "model_score": 0.8051,
+    "style_score": 0.5082,
+    "combined_score": 0.7309,
+    "label": "We think this was probably written by AI, but this estimate is not proof of authorship.",
+    "sent": "I want to describe my experience of the first month in this country. T",
+    "group": "known-human inputs"
+  },
+  {
+    "status": 200,
+    "guess": "unsure",
+    "confidence": 0.0,
+    "model_score": 0.8329,
+    "style_score": 0.3676,
+    "combined_score": 0.5,
+    "label": "We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.",
+    "sent": "There are three main causes of the conflict. The first cause is econom",
+    "group": "known-human inputs"
+  },
+  {
+    "status": 200,
+    "guess": "ai",
+    "confidence": 0.4838,
+    "model_score": 0.8005,
+    "style_score": 0.5663,
+    "combined_score": 0.7419,
+    "label": "We think this was probably written by AI, but this estimate is not proof of authorship.",
+    "sent": "To configure the service, edit the settings file in the installation d",
+    "group": "known-human inputs"
+  }
+]
+```
 
+### Criterion 3 — Label Coverage
+
+```json
+[
+  {
+    "status": 200,
+    "guess": "human",
+    "confidence": 0.538,
+    "model_score": 0.1635,
+    "style_score": 0.4334,
+    "combined_score": 0.231,
+    "label": "We think this was probably written by a person.",
+    "sent": "The importance of effective communication in the workplace cannot be o"
+  },
+  {
+    "status": 200,
+    "guess": "unsure",
+    "confidence": 0.1442,
+    "model_score": 0.6175,
+    "style_score": 0.436,
+    "combined_score": 0.5721,
+    "label": "We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.",
+    "sent": "We got to the campsite about four. The pitch was fine, a bit sloped, b"
+  },
+  {
+    "status": 200,
+    "guess": "ai",
+    "confidence": 0.3742,
+    "model_score": 0.7387,
+    "style_score": 0.5325,
+    "combined_score": 0.6871,
+    "label": "We think this was probably written by AI, but this estimate is not proof of authorship.",
+    "sent": "This report sets out the findings of the working group. The group met "
+  }
+]
+```
+
+### Criterion 4 — Appeal Lifecycle
+
+```json
+[
+  {
+    "status": 200,
+    "guess": "unsure",
+    "confidence": 0.1442,
+    "model_score": 0.6175,
+    "style_score": 0.436,
+    "combined_score": 0.5721,
+    "label": "We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.",
+    "sent": "We got to the campsite about four. The pitch was fine, a bit sloped, b",
+    "appeal_workflow": {
+      "valid_appeal": {
+        "status": 200,
+        "response": {
+          "content_id": "4fe7fda0-077b-45ab-a29c-c085fc66c011",
+          "message": "Your appeal has been recorded for review.",
+          "status": "under_review"
+        },
+        "appeal_log_count": 1
+      },
+      "unknown_appeal": {
+        "status": 404,
+        "response": {
+          "error": "content_not_found",
+          "message": "No submission was found for this content_id."
+        },
+        "appeal_log_count": 0
+      }
+    }
+  }
+]
+```
+
+### Criterion 5 — Bad Text Is Rejected And Not Decided
+
+```json
+[
+  {
+    "status": 400,
+    "guess": null,
+    "confidence": null,
+    "model_score": null,
+    "style_score": null,
+    "combined_score": null,
+    "label": null,
+    "sent": "{\"creator_id\": \"eval_c5_t1_1\"}",
+    "audit_check": {
+      "creator_id": "eval_c5_t1_1",
+      "decision_entries": 0,
+      "rejection_entries": 1,
+      "entries": [
+        {
+          "creator_id": "eval_c5_t1_1",
+          "error": "invalid_text",
+          "event": "rejected",
+          "http_status": 400,
+          "reason": "invalid_text",
+          "status": "rejected",
+          "timestamp": "2026-11-11T19:24:57+00:00"
+        }
+      ]
+    }
+  },
+  {
+    "status": 400,
+    "guess": null,
+    "confidence": null,
+    "model_score": null,
+    "style_score": null,
+    "combined_score": null,
+    "label": null,
+    "sent": "{\"text\": null, \"creator_id\": \"eval_c5_t1_2\"}",
+    "audit_check": {
+      "creator_id": "eval_c5_t1_2",
+      "decision_entries": 0,
+      "rejection_entries": 1,
+      "entries": [
+        {
+          "creator_id": "eval_c5_t1_2",
+          "error": "invalid_text",
+          "event": "rejected",
+          "http_status": 400,
+          "reason": "invalid_text",
+          "status": "rejected",
+          "timestamp": "2026-11-11T19:24:57+00:00"
+        }
+      ]
+    }
+  },
+  {
+    "status": 400,
+    "guess": null,
+    "confidence": null,
+    "model_score": null,
+    "style_score": null,
+    "combined_score": null,
+    "label": null,
+    "sent": "(empty text)",
+    "audit_check": {
+      "creator_id": "eval_c5_t1_3",
+      "decision_entries": 0,
+      "rejection_entries": 1,
+      "entries": [
+        {
+          "creator_id": "eval_c5_t1_3",
+          "error": "invalid_text",
+          "event": "rejected",
+          "http_status": 400,
+          "reason": "invalid_text",
+          "status": "rejected",
+          "timestamp": "2026-11-11T19:24:57+00:00"
+        }
+      ]
+    }
+  },
+  {
+    "status": 400,
+    "guess": null,
+    "confidence": null,
+    "model_score": null,
+    "style_score": null,
+    "combined_score": null,
+    "label": null,
+    "sent": "   ",
+    "audit_check": {
+      "creator_id": "eval_c5_t1_4",
+      "decision_entries": 0,
+      "rejection_entries": 1,
+      "entries": [
+        {
+          "creator_id": "eval_c5_t1_4",
+          "error": "invalid_text",
+          "event": "rejected",
+          "http_status": 400,
+          "reason": "invalid_text",
+          "status": "rejected",
+          "timestamp": "2026-11-11T19:24:57+00:00"
+        }
+      ]
+    }
+  },
+  {
+    "status": 413,
+    "guess": null,
+    "confidence": null,
+    "model_score": null,
+    "style_score": null,
+    "combined_score": null,
+    "label": null,
+    "sent": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "audit_check": {
+      "creator_id": "eval_c5_t1_5",
+      "decision_entries": 0,
+      "rejection_entries": 1,
+      "entries": [
+        {
+          "creator_id": "eval_c5_t1_5",
+          "error": "text_too_long",
+          "event": "rejected",
+          "http_status": 413,
+          "reason": "text_too_long",
+          "status": "rejected",
+          "timestamp": "2026-11-11T19:24:57+00:00"
+        }
+      ]
+    }
+  }
+]
 ```
 
 **Diagnoses**
@@ -427,36 +890,211 @@ that produced it:
 
      Look for a pattern. Five failures on one signal is one problem, not five. -->
 
+**Criterion 2 — MISSED on the approved substitute; original personal-writing
+criterion remains unverified.** Across all three trials, the five AI-evasion
+examples averaged 0.4317 while the five known-human examples averaged 0.6464,
+so the gap was -0.2147 instead of the required +0.20. The main shared stage is
+**signal one** (`detector.model_signal`): GPT-2 predictability does not track
+authorship. Unusual wording and edits make generated prose less predictable,
+while ordinary/formal human prose can be highly predictable. **Signal two**
+also responds to text shape rather than meaning, and the **combining rule**
+averages these imperfect signals (or returns 0.5 for strong disagreement).
+This inverted gap is consistent with the false positives and evasions below;
+it is not evidence about my own writing because I had no personal samples.
+
+**Broken attacks — stages and mechanisms**
+
+- **EV01 (signal one; combining rule):** The misspellings increase model
+  surprise, leaving `model_score` at 0.1635. `style_score` 0.4334 does not
+  counter it, so the weighted combined score is 0.231 and the attack receives
+  the high-confidence-human label.
+- **EV02 (signal two; combining rule):** Breaking prose into short sentences
+  distorts sentence-length statistics (`style_score` 0.1172). Its difference
+  from `model_score` 0.5943 exceeds the disagreement limit, so the combiner
+  forces 0.5/unsure instead of an AI label.
+- **EV03 (signal two; combining rule):** The pasted quotation changes the
+  measured style (`style_score` 0.2852). The signals differ by less than the
+  disagreement cutoff, so averaging yields 0.571/unsure, not AI.
+- **EV04 (signal one; combining rule):** Unusual vocabulary raises
+  perplexity and leaves `model_score` at 0.6114, below the AI threshold.
+  Combined with style 0.4122 the result is 0.5616/unsure.
+- **EV05 (signals one and two; combining rule):** Heavy human editing changes
+  both predictability and surface shape; the scores fall to 0.3212 and 0.2168.
+  Their weighted result is 0.2951, labeled human.
+- **EV06 (signal two; combining rule):** One very long and one very short
+  sentence create a shape the style heuristic reads as less AI-like
+  (`style_score` 0.2507). The weighted score is 0.4922/unsure.
+- **EV07 (signal two; combining rule):** Punctuation padding changes the
+  punctuation/shape features; `style_score` falls to 0.3512. The combination
+  is 0.5275/unsure.
+- **EV08 (signal one; signal two; combining rule):** The below-window sample
+  receives a low `model_score` of 0.2452, while the short-text style fallback
+  is neutral at 0.5. The combined score remains below the human threshold,
+  yielding a human label.
+- **EV09 (signal two; combining rule):** A human opening paragraph moves the
+  style score down to 0.2683 while the model score is 0.7042. Their difference
+  exceeds the disagreement limit, forcing 0.5/unsure rather than AI.
+- **FP02 (signal one; combining rule):** Formal human prose is highly
+  predictable to the model (`model_score` 0.7387); style is also slightly
+  AI-leaning at 0.5325. The combiner produces 0.6871 and the label mapping
+  correctly applies the AI threshold. The failure is the evidence, not the
+  threshold mapping.
+- **FP03 (signal one; combining rule):** Carefully written second-language
+  prose scores 0.8051 on model predictability and 0.5082 on style. The
+  combined 0.7309 crosses the AI threshold and falsely labels a human sample.
+- **FP05 (signal one; combining rule):** Human technical documentation is
+  predictable (`model_score` 0.8005) and regular in shape (`style_score`
+  0.5663). The weighted result 0.7419 maps to AI.
+- **MF03, MF04, MF05, MF06, and MF07 (route validation):** The route checks
+  that `text` is a nonempty string and within the character limit, but does
+  not reject control characters, punctuation-only text, a single long token,
+  emoji-only text, or right-to-left text. All five therefore reach scoring
+  and become ordinary `decided` entries (unsure in this run), instead of
+  being rejected as unusable input. The root stage is route validation; the
+  model/style scores are not meaningful evidence of authorship for these
+  malformed cases.
+
+**Pattern:** Nine of ten evasion attacks succeeded by making signal one or
+signal two produce a non-AI result, often with the combiner returning unsure
+when the signals disagree. The three false positives show the inverse problem:
+predictable human registers push signal one high, and neither the style score
+nor the combiner reliably protects them. Five malformed inputs expose a
+separate route-validation gap. The label mapping itself behaved consistently
+in the label-coverage trial; changing its thresholds alone would trade one
+error type for the other rather than fix the signal limitations.
+
+Criteria 3, 4, and 5 were MET in every trial: all labels appeared, the appeal
+workflow recorded one valid appeal and rejected an unknown ID without logging
+an appeal, and every tested invalid text was rejected and logged without a
+decision.
 
 
 ---
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** One change only: raised `AI_THRESHOLD` from `0.65` to
+`0.75` in `config.py`. No signal weights, route behavior, or scenarios changed.
 
-**Which diagnosis pointed at it:**
+**Which diagnosis pointed at it:** The three false-positive attack examples
+FP02, FP03, and FP05 had combined scores `0.6871`, `0.7309`, and `0.7419`.
+Each was above the old threshold and below `0.75`, so the diagnosis pointed to
+the label-mapping threshold as a targeted way to stop these high-confidence AI
+labels without changing the model or style scores.
 
 ### Attack Run — After
 
 <!-- Same format. `run_attacks.py --label after` -->
 
+Ran the same 56 inputs with the same scenarios. Each result set is preserved:
+[before attack report](./results/attack_run_2026-11-04_1819_before.md) and
+[after attack report](./results/attack_run_2026-11-11_1333_after.md).
 
+| Family | Before BROKE / HELD | After BROKE / HELD |
+|---|---:|---:|
+| Evasion | 9 / 1 | 9 / 1 |
+| False positive | 3 / 5 | 0 / 8 |
+| Flood (same creator) | 0 / 12 | 0 / 12 |
+| Malformed | 5 / 15 | 5 / 15 |
+| Prompt injection | 0 / 6 | 0 / 6 |
+| **Total** | **17 / 39** | **14 / 42** |
+
+FP02, FP03, and FP05 moved from `ai` to `unsure`; the underlying scores did
+not change. EV01–EV09 still do not receive the high-confidence AI label, and
+MF03–MF07 are still accepted and scored.
+
+The three-trial evaluation is also recorded in the
+[before report](./results/run_2026-11-11_1124_before.md) and
+[after report](./results/run_2026-11-11_1333_after.md):
+
+| Criterion | Before | After | Change |
+|---|---:|---:|---|
+| 1. My own writing flagged as AI | UNMEASURED | UNMEASURED | No personal samples available |
+| 2. Score separation (approved substitute) | -0.2147 in all trials | -0.2147 in all trials | No change; still MISSED |
+| 3. All three labels reachable | 3/3 in all trials | 2/3 in all trials | MISSED after threshold increase |
+| 4. Appeal lifecycle | Pass in all trials | Pass in all trials | No change |
+| 5. Invalid text rejected, not decided, and logged | 5/5 in all trials | 5/5 in all trials | No change |
+
+**After-run output excerpts — Trial 1**, recorded by `run_attacks.py::main`
+and `run_eval.py::main` (the complete per-input data is in the linked reports):
+
+```json
+{
+  "id": "FP03",
+  "status": 200,
+  "guess": "unsure",
+  "confidence": 0.4618,
+  "model_score": 0.8051,
+  "style_score": 0.5082,
+  "label": "We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation.",
+  "verdict": "HELD"
+}
+```
+
+```json
+[
+  {
+    "guess": "human",
+    "combined_score": 0.231,
+    "label": "We think this was probably written by a person."
+  },
+  {
+    "guess": "unsure",
+    "combined_score": 0.5721,
+    "label": "We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation."
+  },
+  {
+    "guess": "unsure",
+    "combined_score": 0.6871,
+    "label": "We can't tell who wrote this from the text alone. If you wrote it, this result is not an accusation."
+  }
+]
+```
 
 **Did it help, and how do I know:**
 
 <!-- Widening the unsure band usually fixes one problem and creates another.
      Reporting that trade honestly is worth full credit. -->
 
-
+Yes, narrowly: the attack-set false-positive labels fell from 3 to 0, and total
+broken outcomes fell from 17 to 14. It did not improve score separation or
+evasion resistance. The fixed label-coverage scenario used EV01, FP01, and
+FP02; FP02's score `0.6871` is now unsure, so that scenario reaches only human
+and unsure, not all three labels. This is the cost of the threshold change:
+fewer false accusations in these examples, but fewer high-confidence AI
+decisions and a missed label-coverage criterion.
 
 ---
 
 ## What's Still Broken
 
-<!-- For each attack still getting through and each criterion still missed:
-     what you'd do, and why you stopped. -->
+**Successful evasions (BROKE):** Each of these inputs still avoids a high-confidence AI label. I would improve the signal(s) or validate the input rather than lower the threshold again; I stopped because this iteration was limited to the one threshold change.
 
+- **EV01 — signal one / combining rule:** Misspellings lower model predictability, producing a human label. I would test a signal less sensitive to spelling noise; I stopped before changing either signal.
+- **EV02 — signal two / combining rule:** Short, broken-up sentences distort style statistics and the signal disagreement sends the result to unsure. I would make the style signal and disagreement rule more robust to sentence splitting; I stopped to keep the threshold as the only change.
+- **EV03 — signal two / combining rule:** A pasted quotation shifts measured style and the combination remains unsure. I would evaluate quoted and non-quoted spans separately; I stopped because that changes signal behavior.
+- **EV04 — signal one / combining rule:** Unusual vocabulary raises perplexity and keeps the combined score below the AI band. I would test whether the detector can distinguish rare vocabulary from authorship; I stopped rather than retune the model signal and threshold together.
+- **EV05 — both signals / combining rule:** Heavy human editing changes predictability and surface shape enough to produce a human label. I would test the signals on edited AI text and redesign the combination if needed; I stopped to preserve a one-change comparison.
+- **EV06 — signal two / combining rule:** One long and one short sentence distort the style features, leaving the result unsure. I would make the style features less sensitive to sentence-length extremes; I stopped before changing signal two.
+- **EV07 — signal two / combining rule:** Punctuation padding changes the measured style and keeps the score out of the AI band. I would normalize or constrain punctuation features; I stopped before making a second behavior change.
+- **EV08 — signal one, signal two / combining rule:** Text below the model's useful token window receives a low model score and a neutral short-text style fallback, yielding a human label. I would reject or specially handle text too short for reliable scoring; I stopped to avoid adding route validation to the threshold experiment.
+- **EV09 — signal two / combining rule:** A human opening paragraph pulls style down, and disagreement forces unsure. I would test a chunk-aware approach rather than letting an opening dominate the whole text; I stopped because that requires a signal change.
+
+**Malformed inputs still accepted and scored (BROKE):** The route checks basic type, non-whitespace content, and maximum length, but these cases still reach the signals. I would add targeted route validation for unusable text; I stopped because route validation would be a separate change from the threshold experiment.
+
+- **MF03:** Control characters are accepted. I would reject or normalize disallowed control characters.
+- **MF04:** Punctuation-only text is accepted. I would require meaningful text content.
+- **MF05:** A very long single word is accepted. I would require a minimum amount of tokenized word content.
+- **MF06:** Emoji-only text is accepted. I would require text content suitable for the detector.
+- **MF07:** Right-to-left text is accepted without language/script-aware handling. I would add a deliberate multilingual validation and scoring policy rather than reject a script by default.
+
+**Criteria still missed or unmeasured:**
+
+- **Criterion 1 — UNMEASURED:** I would run the test with ten pieces of my own writing. I stopped because no user-authored samples were available; substituting somebody else's writing would not answer the criterion.
+- **Criterion 2 — MISSED on the approved attack-set substitute:** The AI-evasion mean was `0.4317` and the known-human mean was `0.6464`, a gap of `-0.2147` instead of the required `+0.20`. I would improve and re-evaluate the signals on both groups; I stopped because changing signals as well as the threshold would make this before/after result hard to attribute.
+- **Criterion 3 — MISSED:** The unchanged coverage scenario reaches human and unsure, but not AI, because its highest score is `0.6871` and the threshold is now `0.75`. I would add a stable, known-AI fixture that exercises the AI label (the after attack report includes EV10 at `0.845`) without lowering the threshold. I left the scenario unchanged so the before/after comparison stayed controlled.
+
+Criteria 4 and 5 met their targets in all three trials. The 14 remaining BROKE outcomes are the nine evasions and five malformed-text cases listed above; the after-run attack report records all 56 individual outcomes.
 
 
 **The trade I'd make if this ran for real:**
@@ -464,6 +1102,7 @@ that produced it:
 <!-- Two sentences. Fewer wrong accusations means more AI text getting through.
      Say which way you'd go and WHO PAYS FOR IT. -->
 
+I would favor fewer wrong accusations and keep the `0.75` threshold rather than label these human examples as AI. Writers whose genuine work might otherwise be falsely accused benefit, while reviewers, instructors, and readers bear the cost when AI-generated text below the threshold is not identified with a decisive AI label.
 
 
 <!-- ═════════════════════════════════════════════════════════════════════

@@ -37,7 +37,7 @@ app = Flask(__name__)
 # ── Rate limiting — UNIT 8 ────────────────────────────────────────────────────
 # Off until you turn it on. In unit 8, Milestone 1:
 #
-#   1. Set RATE_LIMITING_ENABLED = True in config.py (or AI201_RATE_LIMITS=1)
+#   1. Set RATE_LIMITING_ENABLED = True in config.py
 #   2. Choose your numbers there
 #   3. Uncomment the @limiter.limit(...) line on /submit below
 #
@@ -103,8 +103,13 @@ if config.RATE_LIMITING_ENABLED:
         payload = request.get_json(silent=True)
         if not isinstance(payload, dict):
             payload = {}
+        creator_id = payload.get("creator_id")
         audit.log_rejection(
-            creator_id=payload.get("creator_id", "unknown"),
+            creator_id=(
+                creator_id.strip()[:128]
+                if isinstance(creator_id, str) and creator_id.strip()
+                else "unknown"
+            ),
             reason="rate_limited",
             limit=str(exc.description),
         )
@@ -151,54 +156,60 @@ def health():
 # ── Multi-signal submission route ─────────────────────────────────────────────
 
 @app.post("/submit")
-# @limiter.limit(f"{config.RATE_LIMIT_PER_MINUTE}/minute;{config.RATE_LIMIT_PER_DAY}/day")
+@limiter.limit(f"{config.RATE_LIMIT_PER_MINUTE}/minute;{config.RATE_LIMIT_PER_DAY}/day")
 def submit():
     """Score one signal, record the decision, and return its audit ID."""
     payload = request.get_json(silent=True)
+    creator_id = payload.get("creator_id") if isinstance(payload, dict) else None
+    log_creator_id = (
+        creator_id.strip()[:128]
+        if isinstance(creator_id, str) and creator_id.strip()
+        else "unknown"
+    )
+
+    def reject(status, error, message):
+        audit.log_rejection(
+            creator_id=log_creator_id,
+            reason=error,
+            error=error,
+            http_status=status,
+        )
+        return jsonify({"error": error, "message": message}), status
+
     if not isinstance(payload, dict):
-        return jsonify({
-            "error": "invalid_request",
-            "message": "Request body must be a JSON object.",
-        }), 400
+        return reject(400, "invalid_request", "Request body must be a JSON object.")
 
     text = payload.get("text")
-    creator_id = payload.get("creator_id")
     if not isinstance(text, str) or not text.strip():
-        return jsonify({
-            "error": "invalid_text",
-            "message": "text must be a non-empty string.",
-        }), 400
+        return reject(400, "invalid_text", "text must be a non-empty string.")
     if len(text) > 20_000:
-        return jsonify({
-            "error": "text_too_long",
-            "message": "text must not exceed 20000 characters.",
-        }), 413
+        return reject(
+            413,
+            "text_too_long",
+            "text must not exceed 20000 characters.",
+        )
     if not isinstance(creator_id, str) or not creator_id.strip():
-        return jsonify({
-            "error": "invalid_creator_id",
-            "message": "creator_id must be a non-empty string.",
-        }), 400
+        return reject(
+            400,
+            "invalid_creator_id",
+            "creator_id must be a non-empty string.",
+        )
     creator_id = creator_id.strip()
     if len(creator_id) > 128:
-        return jsonify({
-            "error": "invalid_creator_id",
-            "message": "creator_id must not exceed 128 characters.",
-        }), 400
+        return reject(
+            400,
+            "invalid_creator_id",
+            "creator_id must not exceed 128 characters.",
+        )
 
     import detector
 
     try:
         model_score = detector.model_signal(text)
     except detector.DetectorUnavailable as exc:
-        return jsonify({
-            "error": "detector_unavailable",
-            "message": str(exc),
-        }), 503
+        return reject(503, "detector_unavailable", str(exc))
     except ValueError as exc:
-        return jsonify({
-            "error": "unscorable_text",
-            "message": str(exc),
-        }), 400
+        return reject(400, "unscorable_text", str(exc))
 
     import stylometry
     import scoring

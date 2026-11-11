@@ -42,7 +42,7 @@ for _stream in (sys.stdout, sys.stderr):
 DEFAULT_URL = f"http://{config.HOST}:{config.PORT}"
 
 
-def bodies_for(scenario):
+def bodies_for(scenario, trial):
     """
     The request bodies one scenario sends.
 
@@ -51,9 +51,20 @@ def bodies_for(scenario):
     string can't — no `text` field, a null, something enormous.
     """
     if scenario.get("bodies"):
-        return list(scenario["bodies"])
+        bodies = []
+        for i, body in enumerate(scenario["bodies"], 1):
+            body = dict(body)
+            if "creator_id" in body:
+                body["creator_id"] = (
+                    f"eval_c{scenario.get('criterion', 0)}_t{trial}_{i}"
+                )
+            bodies.append(body)
+        return bodies
     return [
-        {"text": text, "creator_id": f"eval_{scenario['name'][:12]}_{i}"}
+        {
+            "text": text,
+            "creator_id": f"eval_c{scenario.get('criterion', 0)}_t{trial}_{i}",
+        }
         for i, text in enumerate(scenario["texts"], 1)
     ]
 
@@ -110,24 +121,114 @@ def main():
     for scenario in scenarios.SCENARIOS:
         print(f"\n{scenario['name']}  (criterion {scenario.get('criterion') or '—'})")
 
+        if scenario.get("unmeasured_reason"):
+            print(f"  UNMEASURED: {scenario['unmeasured_reason']}")
+            rows.append({"scenario": scenario, "trials": []})
+            continue
+
         trials = []
         for trial in range(1, args.trials + 1):
             results = []
-            for i, body in enumerate(bodies_for(scenario), 1):
+            for i, body in enumerate(bodies_for(scenario, trial), 1):
                 preview = describe(body)
                 try:
                     response = requests.post(f"{args.url}/submit", json=body,
                                              timeout=args.timeout)
                     payload = response.json() if response.content else {}
-                    results.append({
+                    result = {
                         "status": response.status_code,
                         "guess": payload.get("guess"),
                         "confidence": payload.get("confidence"),
                         "model_score": payload.get("model_score"),
                         "style_score": payload.get("style_score"),
+                        "combined_score": payload.get("combined_score"),
                         "label": payload.get("label"),
                         "sent": preview,
-                    })
+                    }
+                    for group_name, group_texts in scenario.get("groups", {}).items():
+                        if body.get("text") in group_texts:
+                            result["group"] = group_name
+                            break
+
+                    if scenario.get("workflow") == "appeal":
+                        content_id = payload.get("content_id")
+                        appeal_response = requests.post(
+                            f"{args.url}/appeal",
+                            json={
+                                "content_id": content_id,
+                                "reasoning": "Please review this test submission.",
+                            },
+                            timeout=args.timeout,
+                        )
+                        appeal_payload = (
+                            appeal_response.json()
+                            if appeal_response.content else {}
+                        )
+                        log_payload = requests.get(
+                            f"{args.url}/log?limit=200", timeout=5
+                        ).json()
+                        content_events = [
+                            entry for entry in log_payload.get("entries", [])
+                            if entry.get("content_id") == content_id
+                        ]
+                        unknown_id = f"eval-unknown-c{scenario.get('criterion')}-t{trial}"
+                        unknown_response = requests.post(
+                            f"{args.url}/appeal",
+                            json={
+                                "content_id": unknown_id,
+                                "reasoning": "This ID should not exist.",
+                            },
+                            timeout=args.timeout,
+                        )
+                        unknown_payload = (
+                            unknown_response.json()
+                            if unknown_response.content else {}
+                        )
+                        unknown_log = requests.get(
+                            f"{args.url}/log?limit=200", timeout=5
+                        ).json()
+                        unknown_events = [
+                            entry for entry in unknown_log.get("entries", [])
+                            if entry.get("content_id") == unknown_id
+                            and entry.get("event") == "appeal"
+                        ]
+                        result["appeal_workflow"] = {
+                            "valid_appeal": {
+                                "status": appeal_response.status_code,
+                                "response": appeal_payload,
+                                "appeal_log_count": sum(
+                                    1 for entry in content_events
+                                    if entry.get("event") == "appeal"
+                                ),
+                            },
+                            "unknown_appeal": {
+                                "status": unknown_response.status_code,
+                                "response": unknown_payload,
+                                "appeal_log_count": len(unknown_events),
+                            },
+                        }
+
+                    if scenario.get("verify_rejection_log"):
+                        log_payload = requests.get(
+                            f"{args.url}/log?limit=200", timeout=5
+                        ).json()
+                        caller_entries = [
+                            entry for entry in log_payload.get("entries", [])
+                            if entry.get("creator_id") == body.get("creator_id")
+                        ]
+                        result["audit_check"] = {
+                            "creator_id": body.get("creator_id"),
+                            "decision_entries": sum(
+                                1 for entry in caller_entries
+                                if entry.get("status") == "decided"
+                            ),
+                            "rejection_entries": sum(
+                                1 for entry in caller_entries
+                                if entry.get("event") == "rejected"
+                            ),
+                            "entries": caller_entries,
+                        }
+                    results.append(result)
                 except Exception as exc:  # noqa: BLE001
                     results.append({"status": None, "error": f"{type(exc).__name__}: {exc}",
                                     "sent": preview})
@@ -158,8 +259,8 @@ def write_report(rows, args):
         "- Service: `app.py::submit` · scoring: `scoring.py::combine_signals`",
         f"- {n} trials per criterion · {dt.datetime.now().strftime('%Y-%m-%d %H:%M')}",
         "",
-        "Fill in Target from `criteria.md`, and Run and Verdict from the output",
-        "underneath. Whether a trial passed depends on the criterion you wrote.",
+        "Fill in Target, Run, and Verdict from the output underneath. A scenario",
+        "marked UNMEASURED has no trial data because its required inputs were unavailable.",
         "",
         f"| Criterion | Target | {headers} | Verdict |",
         f"|---|---|{divider}|---|",
@@ -169,7 +270,11 @@ def write_report(rows, args):
         scenario = row["scenario"]
         number = scenario.get("criterion")
         name = f"{number}. {scenario['name']}" if number else scenario["name"]
-        lines.append(f"| {name} |  | {' | '.join([' '] * n)} |  |")
+        if scenario.get("unmeasured_reason"):
+            run_values = ["UNMEASURED"] * n
+        else:
+            run_values = [" "] * n
+        lines.append(f"| {name} |  | {' | '.join(run_values)} |  |")
 
     lines += ["", "---", "", "## What actually came back", "",
               "Real output. Paste the relevant parts into your README — the rubric",
@@ -178,6 +283,9 @@ def write_report(rows, args):
     for row in rows:
         scenario = row["scenario"]
         lines += [f"### {scenario['name']}", ""]
+        if scenario.get("unmeasured_reason"):
+            lines += [f"UNMEASURED: {scenario['unmeasured_reason']}", ""]
+            continue
         for trial_number, results in enumerate(row["trials"], 1):
             lines += [f"**Trial {trial_number}**", "", "```json",
                       json.dumps(results, indent=2), "```", ""]
