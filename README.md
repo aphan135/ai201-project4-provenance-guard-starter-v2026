@@ -40,7 +40,7 @@ Provenance Guard gives a text-only estimate of whether a submission may be AI-ge
 
 ## The Shape
 
-I am extending Provenance Guard with **Shape B — harden against failure**. I will add one pre-scoring validation path to `POST /submit`: reject text made only of punctuation and whitespace with HTTP 400 and a rejection audit event, before either scoring signal runs. This addresses a known failure where punctuation-only input currently passes the non-empty check and is scored. Out of scope: handling other unusual text such as control characters, emoji-only input, or multilingual/RTL text; changing either detector signal or the scoring thresholds; and redesigning the interface.
+I extended Provenance Guard with **Shape B — harden against failure**. `POST /submit` now rejects text made only of punctuation and whitespace with HTTP 400 and a rejection audit event, before either scoring signal runs. This addresses a known failure where punctuation-only input passed the non-empty check and was scored. Out of scope: handling other unusual text such as control characters, emoji-only input, or multilingual/RTL text; changing either detector signal or the scoring thresholds; and redesigning the interface.
 
 <!-- The path a submission takes, from arriving to the label a reader sees.
      Six or seven steps — this is the trace you wrote in Milestone 1. -->
@@ -53,7 +53,7 @@ I am extending Provenance Guard with **Shape B — harden against failure**. I w
 6. `scoring.score_to_label(...)` maps the combined result to the reader-facing `label`; `audit.log_decision(...)` records the decision and its `content_id`.
 7. The service returns the decision and scores as JSON. A writer can use `content_id` to submit an appeal; the appeal should be recorded for review, not treated as an automatic re-check.
 
-**Current implementation status:** `POST /submit` runs both signals, combines them, assigns a reader-facing label, and logs both signal scores and the combined score. `confidence` is a distance-from-uncertainty index, not a calibrated probability. `POST /appeal` records valid appeals as append-only `under_review` events.
+**Current implementation status:** `POST /submit` rejects punctuation-only text before running either signal, then scores valid text with both signals, assigns a reader-facing label, and logs both signal scores and the combined score. `confidence` is a distance-from-uncertainty index, not a calibrated probability. `POST /appeal` records valid appeals as append-only `under_review` events.
 
 
 ---
@@ -155,7 +155,7 @@ Success response (`200`, JSON):
 | `style_score` | number | Style signal score, from `0` to `1`. |
 | `combined_score` | number | Weighted score after applying the disagreement rule, from `0` to `1`. |
 
-Malformed JSON or missing/invalid required fields should return `400`; text exceeding 20,000 characters should return `413`. Error responses should be JSON with an `error` code and a readable `message`.
+Malformed JSON or missing/invalid required fields should return `400`; text exceeding 20,000 characters should return `413`. Text consisting only of punctuation and whitespace returns `400` with error code `punctuation_only_text` and is recorded as a rejection before either signal runs. Error responses should be JSON with an `error` code and a readable `message`.
 
 #### `POST /appeal`
 

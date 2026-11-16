@@ -98,6 +98,7 @@ position.**
 | Command | What it does |
 |---|---|
 | `python test.py` | Checks your environment |
+| `python -m unittest -v test_submission` | Runs the focused `/submit` validation tests |
 | `python app.py` | Runs the service |
 | `python detector.py` | Downloads the model and scores a sample — **run before class** |
 | `python detector.py "some text"` | Score one piece of text from the terminal |
