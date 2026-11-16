@@ -122,3 +122,79 @@ Rejecting malformed and oversized input before scoring gives callers a clear res
      A number you missed stays where it is, gets diagnosed, and gets a fix
      attempted. That's where the points are.
      ───────────────────────────────────────────────────────────────────────── -->
+
+## Unit 9 — Run path and instrumentation criteria
+
+> **AI-authored draft at the user's request.** This section does not meet the
+> milestone's unaided-authoring requirement.
+
+### 1. Every successful submission has a complete run trace
+
+For 10 `POST /submit` requests that return HTTP `200` and use distinct
+`creator_id` values, the audit log must contain exactly 10 matching
+`event: "run"` records. Each record must have an ISO-8601 timestamp with a
+zero UTC offset, route `/submit`, HTTP status `200`, nonnegative
+`duration_ms`, a nonempty detector model, an input summary with `creator_id`,
+`text_length`, and a 64-character hexadecimal `text_sha256`, and a nonempty
+output object.
+
+**Why this target:** I require all 10 rather than allowing a missed trace
+because one unrecorded submission cannot be diagnosed later. These fields
+identify the run and its cost without retaining the writer's text verbatim.
+
+### 2. The recorded success output matches the caller's response
+
+For 10 `POST /submit` requests returning HTTP `200` with distinct
+`creator_id` values, each matching trace must have an `output` JSON object
+equal to the full JSON response returned to that caller, including
+`content_id`, `guess`, `label`, `confidence`, `model_score`, `style_score`, and
+`combined_score`. A `decided` audit entry with the same `content_id` must
+exist for each response.
+
+**Why this target:** I require a match for all 10 because a single mismatch
+could make the audit trail describe a different decision from the one the
+caller saw. This checks only response-to-record fidelity, not whether the
+detector's authorship estimate is correct.
+
+### 3. Known failed submissions leave a matching trace
+
+Test six requests: omit `text`, send whitespace-only text, send
+punctuation-only text, send 20,001 characters, make `model_signal` raise
+`DetectorUnavailable`, and make it raise `RuntimeError`; use a different
+`creator_id` for each. Their HTTP statuses must be `400`, `400`, `400`, `413`,
+`503`, and `500`, respectively. Each request must produce exactly one
+`event: "run"` record matched by its `creator_id`, with the same HTTP status
+and no `decided` entry. For the first five responses, the trace's `output`
+must equal the returned JSON; for the 500 response, it must contain
+`content_type` and positive `body_chars`. Each of the first five cases must
+also have exactly one `event: "rejected"` entry.
+
+**Why this target:** I require all six cases because an error that leaves no
+trace is indistinguishable from no request. The cases cover both route
+validation and failures after validation without requiring every possible
+exception to be simulated.
+
+### 4. Run traces do not expose submitted text
+
+For 10 submissions containing distinct sentinel phrases and unique
+`creator_id` values, none of the exact phrases may appear in any audit record
+with the matching `creator_id`. Each matching `event: "run"` input must still
+contain a `text_length` equal to the string's character count and a
+`text_sha256` equal to the SHA-256 digest of its UTF-8 encoding.
+
+**Why this target:** I require this for all 10 because submissions may contain
+private writing. A digest and length preserve a checkable input reference;
+allowing even one raw phrase into the log would defeat that privacy boundary.
+
+### 5. Run records survive a service restart
+
+After one `POST /submit` request returns HTTP `200`, stop and restart the local
+service. A subsequent `GET /log?limit=2` must return an `event: "run"` record
+whose `output.content_id` matches the original response and whose status is
+`200`; the record must also contain its timestamp, input summary, output, and
+`duration_ms`.
+
+**Why this target:** One stop-and-restart cycle is enough to check that the
+local JSONL file, rather than only process memory, preserves the trace. I
+require the record to be readable after restart because otherwise the log
+cannot support later diagnosis.
