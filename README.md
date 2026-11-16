@@ -427,6 +427,19 @@ run-trace append. The first request took `4.452 seconds` while loading the
 model; the remaining nine averaged `0.054 seconds`. This is local compute
 time, not an API charge or a pricing-page estimate.
 
+## Unit 9 — Three Evaluation Trials
+
+Ran all five instrumentation criteria in three separate trials. Every target
+was met in every trial: successful trace completeness `10/10`, response/trace
+matching `10/10`, failure cases `6/6`, sentinel privacy `10/10`, and restart
+persistence `1/1`. The requests went over HTTP to the local Flask service.
+Deterministic local signal stubs isolated route and logging behavior; these
+trials do not measure real model behavior. The five-row run log and actual
+responses/audit records are in
+[`results/unit9_trial_results.md`](./results/unit9_trial_results.md); the
+complete evidence is in the three linked trial JSON files there. Run the same
+evaluation with `python run_unit9_eval.py`.
+
 ---
 
 ## Attack Run — Before

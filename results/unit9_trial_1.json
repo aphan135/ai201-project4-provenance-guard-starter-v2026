@@ -1,0 +1,1572 @@
+{
+  "trial": 1,
+  "criteria": {
+    "1": {
+      "passed": 10,
+      "total": 10,
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "evidence": [
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "e51f0ab0-b55c-47cc-92f8-8e7ce0e6b2a9",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.494+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c1_00",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 33,
+              "text_sha256": "8bec5e27e94a29533972525d6d167cdb5b46a55e9c517340e4fe2079354cded8"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "e51f0ab0-b55c-47cc-92f8-8e7ce0e6b2a9",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 1.422,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "7097a782-9119-4db1-800c-aa2dfc874c82",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.495+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c1_01",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 33,
+              "text_sha256": "07c38a30deafbecddb2698fb3997b8c0c21622d2283b4d4d7fb9ceafa549ecd6"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "7097a782-9119-4db1-800c-aa2dfc874c82",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.375,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "43ebc392-0ab6-4a40-87d7-68fae1e839f4",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.497+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c1_02",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 33,
+              "text_sha256": "eae166ef56f2ff6eba051da3c616f64e9efd815710bac4ecb6d067c006fc3098"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "43ebc392-0ab6-4a40-87d7-68fae1e839f4",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.291,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "ce28d0e1-d52c-4ff7-a7c9-0df39d63dc24",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.497+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c1_03",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 33,
+              "text_sha256": "1eb62874def7fb8ab6f2bd3096bdc454adbfa94a5cad9987136bdd8e7332dfcf"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "ce28d0e1-d52c-4ff7-a7c9-0df39d63dc24",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.251,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "066fad6f-6cd6-48c1-9246-739a28bf4297",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.499+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c1_04",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 33,
+              "text_sha256": "9453375e2378ae0e2a5e85236bb3361fe693ab5430c5fbdec34ec862a53a1456"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "066fad6f-6cd6-48c1-9246-739a28bf4297",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.328,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "98839988-e4d1-4c2a-baac-2cb362a27f3e",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.500+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c1_05",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 33,
+              "text_sha256": "394fb86e3ba7487bb46472e6bcbfe84ffc33e5fe1d8af6cbf0a3a1db8d3fa3d2"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "98839988-e4d1-4c2a-baac-2cb362a27f3e",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.337,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "cbde60c6-a77b-4726-ad8f-8256faf5aabc",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.501+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c1_06",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 33,
+              "text_sha256": "887496fe04e3fc8aa120f062709e0cd639a26f4557b557dd8be1410ca704eca2"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "cbde60c6-a77b-4726-ad8f-8256faf5aabc",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.247,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "850864ae-4407-466c-9c49-72873dc21526",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.502+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c1_07",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 33,
+              "text_sha256": "8b20591fb6e07ceb7fc89699f7a1dc43e026c7f669050e2c4402e45d7fe71da5"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "850864ae-4407-466c-9c49-72873dc21526",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.229,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "a123c8b6-3741-4bac-8106-b47eda73430e",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.503+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c1_08",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 33,
+              "text_sha256": "48d41c676de8d34c4c764e935ed0f7de2a7d596638865d1647000b0fa4b31d7a"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "a123c8b6-3741-4bac-8106-b47eda73430e",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.221,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "fbc8dbb4-b6b7-4f87-b2c1-4ba81a18dd1a",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.504+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c1_09",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 33,
+              "text_sha256": "45a6aca25c94580e8cd2fefea640e027bb3d6419ce428d795cdcfed5f7f8313f"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "fbc8dbb4-b6b7-4f87-b2c1-4ba81a18dd1a",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.218,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        }
+      ]
+    },
+    "2": {
+      "passed": 10,
+      "total": 10,
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "evidence": [
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "2bd52b40-9e12-4cfe-b538-e829e4764d50",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.505+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c2_00",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 27,
+              "text_sha256": "17ed2abbfdc5a70e59985fc2db11c036508767ccebf684b894b0dbb09492645e"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "2bd52b40-9e12-4cfe-b538-e829e4764d50",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.231,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          },
+          "decision": {
+            "timestamp": "2026-11-16T20:49:29.505+00:00",
+            "content_id": "2bd52b40-9e12-4cfe-b538-e829e4764d50",
+            "creator_id": "m5_t1_c2_00",
+            "guess": "human",
+            "model_score": 0.2,
+            "style_score": 0.3,
+            "combined_score": 0.225,
+            "label": "We think this was probably written by a person.",
+            "status": "decided"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "c6839ede-6c3a-4087-a67e-781f375d13cc",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.506+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c2_01",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 27,
+              "text_sha256": "d934e8da6c7d58c4872c66c986582e908e9db698f1d1c1ae1962fd297d5f7b7d"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "c6839ede-6c3a-4087-a67e-781f375d13cc",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.284,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          },
+          "decision": {
+            "timestamp": "2026-11-16T20:49:29.506+00:00",
+            "content_id": "c6839ede-6c3a-4087-a67e-781f375d13cc",
+            "creator_id": "m5_t1_c2_01",
+            "guess": "human",
+            "model_score": 0.2,
+            "style_score": 0.3,
+            "combined_score": 0.225,
+            "label": "We think this was probably written by a person.",
+            "status": "decided"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "f633e2c8-b903-4db5-9a88-b87b10bda1f0",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.507+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c2_02",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 27,
+              "text_sha256": "f1f19a81c255c019b4cbf23fe16adf2188a93a711d4db80d5175c10c2fe061df"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "f633e2c8-b903-4db5-9a88-b87b10bda1f0",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.22,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          },
+          "decision": {
+            "timestamp": "2026-11-16T20:49:29.507+00:00",
+            "content_id": "f633e2c8-b903-4db5-9a88-b87b10bda1f0",
+            "creator_id": "m5_t1_c2_02",
+            "guess": "human",
+            "model_score": 0.2,
+            "style_score": 0.3,
+            "combined_score": 0.225,
+            "label": "We think this was probably written by a person.",
+            "status": "decided"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "512bde55-b6c9-432d-a365-e9ebe71e3027",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.508+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c2_03",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 27,
+              "text_sha256": "ca623f4216b3a46ec0c2f73e607b691e12fc7effc59b0d12b59dee438c6b21ee"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "512bde55-b6c9-432d-a365-e9ebe71e3027",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.236,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          },
+          "decision": {
+            "timestamp": "2026-11-16T20:49:29.508+00:00",
+            "content_id": "512bde55-b6c9-432d-a365-e9ebe71e3027",
+            "creator_id": "m5_t1_c2_03",
+            "guess": "human",
+            "model_score": 0.2,
+            "style_score": 0.3,
+            "combined_score": 0.225,
+            "label": "We think this was probably written by a person.",
+            "status": "decided"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "fc4f438c-8934-4f0b-b9e1-a843c4e2b161",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.509+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c2_04",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 27,
+              "text_sha256": "b1962c7f3e47ee7649727d41dbe41e19bc65cecba39374d239538fdc1896e7a8"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "fc4f438c-8934-4f0b-b9e1-a843c4e2b161",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.268,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          },
+          "decision": {
+            "timestamp": "2026-11-16T20:49:29.509+00:00",
+            "content_id": "fc4f438c-8934-4f0b-b9e1-a843c4e2b161",
+            "creator_id": "m5_t1_c2_04",
+            "guess": "human",
+            "model_score": 0.2,
+            "style_score": 0.3,
+            "combined_score": 0.225,
+            "label": "We think this was probably written by a person.",
+            "status": "decided"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "abf6495d-7546-471f-a2fc-5f35e0b400fa",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.510+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c2_05",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 27,
+              "text_sha256": "411ce511636bd0e7be012fe9cc13418e00d1f9ea5c91a22ae57530ffc1e7ae72"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "abf6495d-7546-471f-a2fc-5f35e0b400fa",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.229,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          },
+          "decision": {
+            "timestamp": "2026-11-16T20:49:29.510+00:00",
+            "content_id": "abf6495d-7546-471f-a2fc-5f35e0b400fa",
+            "creator_id": "m5_t1_c2_05",
+            "guess": "human",
+            "model_score": 0.2,
+            "style_score": 0.3,
+            "combined_score": 0.225,
+            "label": "We think this was probably written by a person.",
+            "status": "decided"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "57744b87-1197-4e90-a49c-434a9f13fc57",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.511+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c2_06",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 27,
+              "text_sha256": "cb6bc2a094cea4428fb1e29914c4de5a76491782684c4b8632b7766e4e3b57c1"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "57744b87-1197-4e90-a49c-434a9f13fc57",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.224,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          },
+          "decision": {
+            "timestamp": "2026-11-16T20:49:29.510+00:00",
+            "content_id": "57744b87-1197-4e90-a49c-434a9f13fc57",
+            "creator_id": "m5_t1_c2_06",
+            "guess": "human",
+            "model_score": 0.2,
+            "style_score": 0.3,
+            "combined_score": 0.225,
+            "label": "We think this was probably written by a person.",
+            "status": "decided"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "ece1663a-1d49-4387-9711-fe30e556f0f4",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.511+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c2_07",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 27,
+              "text_sha256": "2c9f05bf7ae039cc3140926550010ec1ea039061c22bc568a6959d846cf4854d"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "ece1663a-1d49-4387-9711-fe30e556f0f4",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.224,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          },
+          "decision": {
+            "timestamp": "2026-11-16T20:49:29.511+00:00",
+            "content_id": "ece1663a-1d49-4387-9711-fe30e556f0f4",
+            "creator_id": "m5_t1_c2_07",
+            "guess": "human",
+            "model_score": 0.2,
+            "style_score": 0.3,
+            "combined_score": 0.225,
+            "label": "We think this was probably written by a person.",
+            "status": "decided"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "ed7518d0-0044-4b73-a10c-572d9992dc5c",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.512+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c2_08",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 27,
+              "text_sha256": "b8a5f96486149d0e01541dc83179d8a9331aab60504c87c3d4bedcd71a0bef31"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "ed7518d0-0044-4b73-a10c-572d9992dc5c",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.226,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          },
+          "decision": {
+            "timestamp": "2026-11-16T20:49:29.512+00:00",
+            "content_id": "ed7518d0-0044-4b73-a10c-572d9992dc5c",
+            "creator_id": "m5_t1_c2_08",
+            "guess": "human",
+            "model_score": 0.2,
+            "style_score": 0.3,
+            "combined_score": 0.225,
+            "label": "We think this was probably written by a person.",
+            "status": "decided"
+          }
+        },
+        {
+          "response": {
+            "status": 200,
+            "body": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "db2da583-217e-43dc-bdac-e78110299eb2",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.513+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c2_09",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 27,
+              "text_sha256": "331e153f47cc3687c1844b208163db4f6e80c0113e9f53dacfe0d89549aafa39"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "db2da583-217e-43dc-bdac-e78110299eb2",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.257,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          },
+          "decision": {
+            "timestamp": "2026-11-16T20:49:29.513+00:00",
+            "content_id": "db2da583-217e-43dc-bdac-e78110299eb2",
+            "creator_id": "m5_t1_c2_09",
+            "guess": "human",
+            "model_score": 0.2,
+            "style_score": 0.3,
+            "combined_score": 0.225,
+            "label": "We think this was probably written by a person.",
+            "status": "decided"
+          }
+        }
+      ]
+    },
+    "3": {
+      "passed": 6,
+      "total": 6,
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "evidence": [
+        {
+          "case": "missing_text",
+          "expected_status": 400,
+          "response": {
+            "status": 400,
+            "body": {
+              "error": "invalid_text",
+              "message": "text must be a non-empty string."
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.514+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c3_0",
+              "text_present": false,
+              "text_type": "missing"
+            },
+            "output": {
+              "error": "invalid_text",
+              "message": "text must be a non-empty string."
+            },
+            "duration_ms": 0.214,
+            "http_status": 400,
+            "detector_model": "gpt2"
+          },
+          "rejection": {
+            "timestamp": "2026-11-16T20:49:29.514+00:00",
+            "creator_id": "m5_t1_c3_0",
+            "event": "rejected",
+            "status": "rejected",
+            "reason": "invalid_text",
+            "error": "invalid_text",
+            "http_status": 400
+          },
+          "decision_count": 0
+        },
+        {
+          "case": "whitespace",
+          "expected_status": 400,
+          "response": {
+            "status": 400,
+            "body": {
+              "error": "invalid_text",
+              "message": "text must be a non-empty string."
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.516+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c3_1",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 3,
+              "text_sha256": "0aad7da77d2ed59c396c99a74e49f3a4524dcdbcb5163251b1433d640247aeb4"
+            },
+            "output": {
+              "error": "invalid_text",
+              "message": "text must be a non-empty string."
+            },
+            "duration_ms": 0.343,
+            "http_status": 400,
+            "detector_model": "gpt2"
+          },
+          "rejection": {
+            "timestamp": "2026-11-16T20:49:29.515+00:00",
+            "creator_id": "m5_t1_c3_1",
+            "event": "rejected",
+            "status": "rejected",
+            "reason": "invalid_text",
+            "error": "invalid_text",
+            "http_status": 400
+          },
+          "decision_count": 0
+        },
+        {
+          "case": "punctuation",
+          "expected_status": 400,
+          "response": {
+            "status": 400,
+            "body": {
+              "error": "punctuation_only_text",
+              "message": "text must contain something other than punctuation or whitespace."
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.517+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c3_2",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 7,
+              "text_sha256": "4d85f060696fdd4125bfc0f6508f6fb05be68bc859e5e24d48da0167ae603d2a"
+            },
+            "output": {
+              "error": "punctuation_only_text",
+              "message": "text must contain something other than punctuation or whitespace."
+            },
+            "duration_ms": 0.224,
+            "http_status": 400,
+            "detector_model": "gpt2"
+          },
+          "rejection": {
+            "timestamp": "2026-11-16T20:49:29.517+00:00",
+            "creator_id": "m5_t1_c3_2",
+            "event": "rejected",
+            "status": "rejected",
+            "reason": "punctuation_only_text",
+            "error": "punctuation_only_text",
+            "http_status": 400
+          },
+          "decision_count": 0
+        },
+        {
+          "case": "oversized",
+          "expected_status": 413,
+          "response": {
+            "status": 413,
+            "body": {
+              "error": "text_too_long",
+              "message": "text must not exceed 20000 characters."
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.518+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c3_3",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 20001,
+              "text_sha256": "991b716ebf8586a3b931be8ad3dd6d0979eb1049e05eeb714dbedbb06696ee3f"
+            },
+            "output": {
+              "error": "text_too_long",
+              "message": "text must not exceed 20000 characters."
+            },
+            "duration_ms": 0.275,
+            "http_status": 413,
+            "detector_model": "gpt2"
+          },
+          "rejection": {
+            "timestamp": "2026-11-16T20:49:29.518+00:00",
+            "creator_id": "m5_t1_c3_3",
+            "event": "rejected",
+            "status": "rejected",
+            "reason": "text_too_long",
+            "error": "text_too_long",
+            "http_status": 413
+          },
+          "decision_count": 0
+        },
+        {
+          "case": "detector_unavailable",
+          "expected_status": 503,
+          "response": {
+            "status": 503,
+            "body": {
+              "error": "detector_unavailable",
+              "message": "detector unavailable for test"
+            }
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.519+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c3_4",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 22,
+              "text_sha256": "9f19715933e4b8529e4619a91b7effb466b51e6455f31e9fb43384e301e2ef7e"
+            },
+            "output": {
+              "error": "detector_unavailable",
+              "message": "detector unavailable for test"
+            },
+            "duration_ms": 0.259,
+            "http_status": 503,
+            "detector_model": "gpt2"
+          },
+          "rejection": {
+            "timestamp": "2026-11-16T20:49:29.519+00:00",
+            "creator_id": "m5_t1_c3_4",
+            "event": "rejected",
+            "status": "rejected",
+            "reason": "detector_unavailable",
+            "error": "detector_unavailable",
+            "http_status": 503
+          },
+          "decision_count": 0
+        },
+        {
+          "case": "runtime_error",
+          "expected_status": 500,
+          "response": {
+            "status": 500,
+            "body": "<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n"
+          },
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.522+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c3_5",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 24,
+              "text_sha256": "e5b8fa6e595b81f6d9c4068549a59a22a3c0fb822f686a37aad7635351359b24"
+            },
+            "output": {
+              "content_type": "text/html; charset=utf-8",
+              "body_chars": 265
+            },
+            "duration_ms": 2.485,
+            "http_status": 500,
+            "detector_model": "gpt2"
+          },
+          "rejection": null,
+          "decision_count": 0
+        }
+      ]
+    },
+    "4": {
+      "passed": 10,
+      "total": 10,
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "evidence": [
+        {
+          "passed": true,
+          "creator_id": "m5_t1_c4_00",
+          "text_length": 40,
+          "text_sha256": "cf87afde1b6ab97a617abaa40698a07ca53396f6010b91a0798d8fd7fda217d7",
+          "leaked": false,
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.524+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c4_00",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 40,
+              "text_sha256": "cf87afde1b6ab97a617abaa40698a07ca53396f6010b91a0798d8fd7fda217d7"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "dcb17370-a316-4119-9fdd-4ded6811c37c",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.3,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "passed": true,
+          "creator_id": "m5_t1_c4_01",
+          "text_length": 40,
+          "text_sha256": "496ff3d8d925f2d19b7002df53a96cb5225dd795d1350c1709a1a94a37505e6c",
+          "leaked": false,
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.525+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c4_01",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 40,
+              "text_sha256": "496ff3d8d925f2d19b7002df53a96cb5225dd795d1350c1709a1a94a37505e6c"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "379f7a04-7308-4e04-a7c6-337ac84c259e",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.246,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "passed": true,
+          "creator_id": "m5_t1_c4_02",
+          "text_length": 40,
+          "text_sha256": "7a7997d25cbeba25899d9fb1b79a1c2fa044f31cc0fe5b818d6b6d79c5def42c",
+          "leaked": false,
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.526+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c4_02",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 40,
+              "text_sha256": "7a7997d25cbeba25899d9fb1b79a1c2fa044f31cc0fe5b818d6b6d79c5def42c"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "f6592c7a-d486-4671-bbfa-ed43ae694b53",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.264,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "passed": true,
+          "creator_id": "m5_t1_c4_03",
+          "text_length": 40,
+          "text_sha256": "0cca17106d5567e1e110b76986fc2ca4431cf896f5a9d83387acf91d5e8dce5e",
+          "leaked": false,
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.527+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c4_03",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 40,
+              "text_sha256": "0cca17106d5567e1e110b76986fc2ca4431cf896f5a9d83387acf91d5e8dce5e"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "c879c155-1eda-47c8-b72c-de8a7f3510fc",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.242,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "passed": true,
+          "creator_id": "m5_t1_c4_04",
+          "text_length": 40,
+          "text_sha256": "965379da923f3bb2384151693dc5626879d22917da30d74dabd6df272468ef45",
+          "leaked": false,
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.528+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c4_04",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 40,
+              "text_sha256": "965379da923f3bb2384151693dc5626879d22917da30d74dabd6df272468ef45"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "a3e66a00-e360-42dc-9134-26e37bf670f1",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.242,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "passed": true,
+          "creator_id": "m5_t1_c4_05",
+          "text_length": 40,
+          "text_sha256": "2617d70b345d067ab8efdf73d2cf39acfd48ddb524a6bd731ddfd7f5ff4b70b7",
+          "leaked": false,
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.529+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c4_05",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 40,
+              "text_sha256": "2617d70b345d067ab8efdf73d2cf39acfd48ddb524a6bd731ddfd7f5ff4b70b7"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "2e6e62f5-b885-4658-a54c-cb5107d66a39",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.235,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "passed": true,
+          "creator_id": "m5_t1_c4_06",
+          "text_length": 40,
+          "text_sha256": "41fd749bcefbfd5590e00fdd7b84dfe37d6018adc13cdf6135ae3d3b783532ce",
+          "leaked": false,
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.531+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c4_06",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 40,
+              "text_sha256": "41fd749bcefbfd5590e00fdd7b84dfe37d6018adc13cdf6135ae3d3b783532ce"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "c59eef43-b6ce-4362-a623-33a272b4df82",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.225,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "passed": true,
+          "creator_id": "m5_t1_c4_07",
+          "text_length": 40,
+          "text_sha256": "d75b74ede5230750c19d0a4bcaf451af673156e96b733291845eafa39736507f",
+          "leaked": false,
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.532+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c4_07",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 40,
+              "text_sha256": "d75b74ede5230750c19d0a4bcaf451af673156e96b733291845eafa39736507f"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "2d43b386-bd3c-41a0-a4d5-d2a27158ea34",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.402,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "passed": true,
+          "creator_id": "m5_t1_c4_08",
+          "text_length": 40,
+          "text_sha256": "8e008fcbb4fbe68b461e77ac5e45a2029ade3a69231077b34e994303bb63593b",
+          "leaked": false,
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.533+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c4_08",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 40,
+              "text_sha256": "8e008fcbb4fbe68b461e77ac5e45a2029ade3a69231077b34e994303bb63593b"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "f9ef8e6a-9904-4b6d-b6dd-8f27f26dbd0b",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.246,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "passed": true,
+          "creator_id": "m5_t1_c4_09",
+          "text_length": 40,
+          "text_sha256": "63fffd5632cc0ebe6b94ce3e8488e93b1c1c2e12e8f841d1566dbcc670c2727d",
+          "leaked": false,
+          "run": {
+            "timestamp": "2026-11-16T20:49:29.534+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t1_c4_09",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 40,
+              "text_sha256": "63fffd5632cc0ebe6b94ce3e8488e93b1c1c2e12e8f841d1566dbcc670c2727d"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "7b553f90-56dc-4e54-b502-b20f91f6c3a2",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.319,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        }
+      ]
+    },
+    "5": {
+      "passed": 1,
+      "total": 1,
+      "checks": [
+        true
+      ],
+      "evidence": {
+        "passed": true,
+        "submit_response": {
+          "status": 200,
+          "body": {
+            "combined_score": 0.225,
+            "confidence": 0.55,
+            "content_id": "76eebf84-50b3-45e8-b819-40136cdbd5a9",
+            "guess": "human",
+            "label": "We think this was probably written by a person.",
+            "model_score": 0.2,
+            "style_score": 0.3
+          }
+        },
+        "log_response_status": 200,
+        "restarted_log_response": {
+          "count": 2,
+          "entries": [
+            {
+              "combined_score": 0.225,
+              "content_id": "76eebf84-50b3-45e8-b819-40136cdbd5a9",
+              "creator_id": "m5_t1_restart",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "status": "decided",
+              "style_score": 0.3,
+              "timestamp": "2026-11-16T20:49:29.751+00:00"
+            },
+            {
+              "detector_model": "gpt2",
+              "duration_ms": 0.858,
+              "event": "run",
+              "http_status": 200,
+              "input": {
+                "creator_id": "m5_t1_restart",
+                "text_length": 64,
+                "text_present": true,
+                "text_sha256": "fc3d5e6ee2b6ecb3a46232c58ed6bf8b586939cada5cd1c77d3d67dd366f53d4",
+                "text_type": "str"
+              },
+              "output": {
+                "combined_score": 0.225,
+                "confidence": 0.55,
+                "content_id": "76eebf84-50b3-45e8-b819-40136cdbd5a9",
+                "guess": "human",
+                "label": "We think this was probably written by a person.",
+                "model_score": 0.2,
+                "style_score": 0.3
+              },
+              "route": "/submit",
+              "timestamp": "2026-11-16T20:49:29.752+00:00"
+            }
+          ]
+        },
+        "matching_run": {
+          "detector_model": "gpt2",
+          "duration_ms": 0.858,
+          "event": "run",
+          "http_status": 200,
+          "input": {
+            "creator_id": "m5_t1_restart",
+            "text_length": 64,
+            "text_present": true,
+            "text_sha256": "fc3d5e6ee2b6ecb3a46232c58ed6bf8b586939cada5cd1c77d3d67dd366f53d4",
+            "text_type": "str"
+          },
+          "output": {
+            "combined_score": 0.225,
+            "confidence": 0.55,
+            "content_id": "76eebf84-50b3-45e8-b819-40136cdbd5a9",
+            "guess": "human",
+            "label": "We think this was probably written by a person.",
+            "model_score": 0.2,
+            "style_score": 0.3
+          },
+          "route": "/submit",
+          "timestamp": "2026-11-16T20:49:29.752+00:00"
+        }
+      }
+    }
+  },
+  "method": {
+    "service": "Flask app.py served over HTTP on loopback",
+    "signals": "Deterministic local stubs; no external model or API calls",
+    "audit_log": "Fresh temporary JSONL file per trial"
+  }
+}
