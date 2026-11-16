@@ -378,6 +378,57 @@ back to the caller's address.
 
 ---
 
+## Instrumentation
+
+The local JSONL file at `logs/audit.jsonl` records every `POST /submit`.
+Each request gets an `event: "run"` trace with a UTC timestamp, route, input
+summary, response output, `duration_ms`, HTTP status, and detector model.
+Decision and rejection records remain alongside those traces. To avoid
+retaining writers' text verbatim, the input summary stores the creator ID,
+text length, and SHA-256 digest.
+
+These are ten successful traces from ten consecutive requests using the same
+195-character sample and distinct creator IDs. They were captured from the
+running local service:
+
+```json
+{"timestamp":"2026-11-16T08:33:06.146+00:00","event":"run","route":"/submit","input":{"creator_id":"m3_cost_01","text_present":true,"text_type":"str","text_length":195,"text_sha256":"1e71fa18785809d1838ee4deda6a89de7c7b5363970a0407babe367dbd44685b"},"output":{"combined_score":0.1499,"confidence":0.7002,"content_id":"d6fa6bec-2469-48bd-affb-7ed4a4466ca0","guess":"human","label":"We think this was probably written by a person.","model_score":0.0757,"style_score":0.3724},"duration_ms":4452.452,"http_status":200,"detector_model":"gpt2"}
+{"timestamp":"2026-11-16T08:33:06.203+00:00","event":"run","route":"/submit","input":{"creator_id":"m3_cost_02","text_present":true,"text_type":"str","text_length":195,"text_sha256":"1e71fa18785809d1838ee4deda6a89de7c7b5363970a0407babe367dbd44685b"},"output":{"combined_score":0.1499,"confidence":0.7002,"content_id":"b4ad1619-a447-424b-b8e5-0b3353316518","guess":"human","label":"We think this was probably written by a person.","model_score":0.0757,"style_score":0.3724},"duration_ms":48.488,"http_status":200,"detector_model":"gpt2"}
+{"timestamp":"2026-11-16T08:33:06.308+00:00","event":"run","route":"/submit","input":{"creator_id":"m3_cost_03","text_present":true,"text_type":"str","text_length":195,"text_sha256":"1e71fa18785809d1838ee4deda6a89de7c7b5363970a0407babe367dbd44685b"},"output":{"combined_score":0.1499,"confidence":0.7002,"content_id":"873a7ccc-d76d-4d86-9c46-1224fd274670","guess":"human","label":"We think this was probably written by a person.","model_score":0.0757,"style_score":0.3724},"duration_ms":102.855,"http_status":200,"detector_model":"gpt2"}
+{"timestamp":"2026-11-16T08:33:06.358+00:00","event":"run","route":"/submit","input":{"creator_id":"m3_cost_04","text_present":true,"text_type":"str","text_length":195,"text_sha256":"1e71fa18785809d1838ee4deda6a89de7c7b5363970a0407babe367dbd44685b"},"output":{"combined_score":0.1499,"confidence":0.7002,"content_id":"84b8cd73-5231-4173-9964-ac2d0c5883cf","guess":"human","label":"We think this was probably written by a person.","model_score":0.0757,"style_score":0.3724},"duration_ms":47.849,"http_status":200,"detector_model":"gpt2"}
+{"timestamp":"2026-11-16T08:33:06.429+00:00","event":"run","route":"/submit","input":{"creator_id":"m3_cost_05","text_present":true,"text_type":"str","text_length":195,"text_sha256":"1e71fa18785809d1838ee4deda6a89de7c7b5363970a0407babe367dbd44685b"},"output":{"combined_score":0.1499,"confidence":0.7002,"content_id":"65b2bade-8a14-41ff-8729-0599bfe663c4","guess":"human","label":"We think this was probably written by a person.","model_score":0.0757,"style_score":0.3724},"duration_ms":69.960,"http_status":200,"detector_model":"gpt2"}
+{"timestamp":"2026-11-16T08:33:06.472+00:00","event":"run","route":"/submit","input":{"creator_id":"m3_cost_06","text_present":true,"text_type":"str","text_length":195,"text_sha256":"1e71fa18785809d1838ee4deda6a89de7c7b5363970a0407babe367dbd44685b"},"output":{"combined_score":0.1499,"confidence":0.7002,"content_id":"d8ed40cb-2790-43cf-bedc-6036086e598d","guess":"human","label":"We think this was probably written by a person.","model_score":0.0757,"style_score":0.3724},"duration_ms":40.886,"http_status":200,"detector_model":"gpt2"}
+{"timestamp":"2026-11-16T08:33:06.513+00:00","event":"run","route":"/submit","input":{"creator_id":"m3_cost_07","text_present":true,"text_type":"str","text_length":195,"text_sha256":"1e71fa18785809d1838ee4deda6a89de7c7b5363970a0407babe367dbd44685b"},"output":{"combined_score":0.1499,"confidence":0.7002,"content_id":"c53fef53-b027-4ab3-a61d-7cfb0c141c30","guess":"human","label":"We think this was probably written by a person.","model_score":0.0757,"style_score":0.3724},"duration_ms":39.427,"http_status":200,"detector_model":"gpt2"}
+{"timestamp":"2026-11-16T08:33:06.576+00:00","event":"run","route":"/submit","input":{"creator_id":"m3_cost_08","text_present":true,"text_type":"str","text_length":195,"text_sha256":"1e71fa18785809d1838ee4deda6a89de7c7b5363970a0407babe367dbd44685b"},"output":{"combined_score":0.1499,"confidence":0.7002,"content_id":"eed13a0e-d493-4f4d-8e52-569884cac8f2","guess":"human","label":"We think this was probably written by a person.","model_score":0.0757,"style_score":0.3724},"duration_ms":62.009,"http_status":200,"detector_model":"gpt2"}
+{"timestamp":"2026-11-16T08:33:06.616+00:00","event":"run","route":"/submit","input":{"creator_id":"m3_cost_09","text_present":true,"text_type":"str","text_length":195,"text_sha256":"1e71fa18785809d1838ee4deda6a89de7c7b5363970a0407babe367dbd44685b"},"output":{"combined_score":0.1499,"confidence":0.7002,"content_id":"d8e8297e-e8fa-4b50-9833-d4284b62dfc7","guess":"human","label":"We think this was probably written by a person.","model_score":0.0757,"style_score":0.3724},"duration_ms":38.308,"http_status":200,"detector_model":"gpt2"}
+{"timestamp":"2026-11-16T08:33:06.655+00:00","event":"run","route":"/submit","input":{"creator_id":"m3_cost_10","text_present":true,"text_type":"str","text_length":195,"text_sha256":"1e71fa18785809d1838ee4deda6a89de7c7b5363970a0407babe367dbd44685b"},"output":{"combined_score":0.1499,"confidence":0.7002,"content_id":"ba7b620e-1006-4f09-b5ef-dcd6a6373a5b","guess":"human","label":"We think this was probably written by a person.","model_score":0.0757,"style_score":0.3724},"duration_ms":38.013,"http_status":200,"detector_model":"gpt2"}
+```
+
+**Rejected run:** The punctuation-only input was rejected before scoring. The
+run trace and its matching domain audit record are both present in the same
+JSONL file:
+
+```json
+{"timestamp":"2026-11-16T08:33:06.657+00:00","event":"run","route":"/submit","input":{"creator_id":"m3_cost_failure","text_present":true,"text_type":"str","text_length":11,"text_sha256":"5395253e7fd363bfd89a3ed3bb9a3ec3297916010ab5b0947833ba8a80fdaf95"},"output":{"error":"punctuation_only_text","message":"text must contain something other than punctuation or whitespace."},"duration_ms":0.294,"http_status":400,"detector_model":"gpt2"}
+{"timestamp":"2026-11-16T08:33:06.657+00:00","creator_id":"m3_cost_failure","event":"rejected","status":"rejected","reason":"punctuation_only_text","error":"punctuation_only_text","http_status":400}
+```
+
+## What It Costs
+
+**Average `/submit` duration: 0.494 seconds** across the ten successful
+requests above (`494.025 ms`, the arithmetic mean of their recorded
+`duration_ms`). I sent the same 195-character input ten times to the running
+local service, using a distinct `creator_id` each time to avoid the rate
+limit, then calculated the mean from the ten `event: "run"` records in
+`logs/audit.jsonl`. The request hook uses `time.perf_counter()` at the start
+of route handling and after response generation. It includes model inference,
+style scoring, and the decision audit append, but not service startup or the
+run-trace append. The first request took `4.452 seconds` while loading the
+model; the remaining nine averaged `0.054 seconds`. This is local compute
+time, not an API charge or a pricing-page estimate.
+
+---
+
 ## Attack Run — Before
 
 <!-- Every attack with its outcome and a held-or-broke mark.
@@ -1004,8 +1055,9 @@ Ran the same 56 inputs with the same scenarios. Each result set is preserved:
 | **Total** | **17 / 39** | **14 / 42** |
 
 FP02, FP03, and FP05 moved from `ai` to `unsure`; the underlying scores did
-not change. EV01–EV09 still do not receive the high-confidence AI label, and
-MF03–MF07 are still accepted and scored.
+not change. EV01–EV09 still do not receive the high-confidence AI label.
+At the time of this unit-8 run, MF03–MF07 were accepted and scored; the later
+Shape B extension below the unit-8 results now rejects punctuation-only MF04.
 
 The three-trial evaluation is also recorded in the
 [before report](./results/run_2026-11-11_1124_before.md) and
@@ -1084,10 +1136,9 @@ decisions and a missed label-coverage criterion.
 - **EV08 — signal one, signal two / combining rule:** Text below the model's useful token window receives a low model score and a neutral short-text style fallback, yielding a human label. I would reject or specially handle text too short for reliable scoring; I stopped to avoid adding route validation to the threshold experiment.
 - **EV09 — signal two / combining rule:** A human opening paragraph pulls style down, and disagreement forces unsure. I would test a chunk-aware approach rather than letting an opening dominate the whole text; I stopped because that requires a signal change.
 
-**Malformed inputs still accepted and scored (BROKE):** The route checks basic type, non-whitespace content, and maximum length, but these cases still reach the signals. I would add targeted route validation for unusable text; I stopped because route validation would be a separate change from the threshold experiment.
+**Malformed inputs still accepted and scored (BROKE):** The unit-8 run found these cases reaching the signals. The later Shape B extension now rejects punctuation-only MF04; the remaining cases below are still open.
 
 - **MF03:** Control characters are accepted. I would reject or normalize disallowed control characters.
-- **MF04:** Punctuation-only text is accepted. I would require meaningful text content.
 - **MF05:** A very long single word is accepted. I would require a minimum amount of tokenized word content.
 - **MF06:** Emoji-only text is accepted. I would require text content suitable for the detector.
 - **MF07:** Right-to-left text is accepted without language/script-aware handling. I would add a deliberate multilingual validation and scoring policy rather than reject a script by default.
