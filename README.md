@@ -427,6 +427,12 @@ run-trace append. The first request took `4.452 seconds` while loading the
 model; the remaining nine averaged `0.054 seconds`. This is local compute
 time, not an API charge or a pricing-page estimate.
 
+For 100 people submitting once each per day, the measured mean gives
+`100 × 0.494025 s = 49.403 s/day`; since that mean includes a cold model load,
+a shared process with one cold request and 99 warm ones is more realistically
+`4.452 s + 99 × 0.054199 s = 9.818 s/day` of handler time, with no per-call
+API charge (machine or hosting cost is not included).
+
 ## Unit 9 — Three Evaluation Trials
 
 The original Milestone 5 run and the Milestone 6 follow-up both ran all five
@@ -1234,3 +1240,41 @@ I would favor fewer wrong accusations and keep the `0.75` threshold rather than 
 ---
 
 📖 **How to run this project: [RUNNING.md](RUNNING.md)**
+
+## Capstone
+
+### What's Still Broken
+
+All five instrumentation criteria were MET in all three trials; there are no
+missed criteria from this evaluation. The original criterion 5 target was too
+low: one service restart per trial checked only one clean lifecycle. I
+tightened the follow-up to require the same audit record after three
+consecutive restarts, and it passed all nine checks. The remaining limitation
+is that the detector and stylometry signals were stubbed in these trials, so
+real model behavior, real inference latency, and failures inside the real
+model are not covered.
+
+### What I'd Do Next
+
+First, I would rerun the instrumentation criteria against the real local
+detector and stylometry implementation with a small, consented fixture set.
+That would test the model-to-route failure boundary and real latency, which
+the stubbed trials cannot establish.
+
+### How I Used AI
+
+- *What I asked for:* Help completing the evaluation milestones, including
+  constructing a repeatable harness, running three trials, comparing the
+  results, and finishing this write-up.
+- *What came back:* A local-HTTP evaluator using deterministic detector and
+  stylometry stubs, saved trial JSON, report drafts, and the observation that
+  the one-restart persistence target was weaker than the other all-cases
+  targets.
+- *What I checked and changed:* I verified the actual responses, audit
+  records, restart results, calculations, and regression tests; preserved the
+  original results; and tightened the evaluator to check three restarts. The
+  Unit 9 criteria in `criteria.md` were AI-authored at my request, so they do
+  not satisfy the milestone's unaided-authoring requirement.
+
+**Repository URL to submit:**
+https://github.com/aphan135/ai201-project4-provenance-guard-starter-v2026
