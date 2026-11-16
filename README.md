@@ -1273,8 +1273,9 @@ the stubbed trials cannot establish.
 - *What I checked and changed:* I verified the actual responses, audit
   records, restart results, calculations, and regression tests; preserved the
   original results; and tightened the evaluator to check three restarts. The
-  Unit 9 criteria in `criteria.md` were AI-authored at my request, so they do
-  not satisfy the milestone's unaided-authoring requirement.
+  Unit 9 criteria in `criteria.md` were AI-authored at my request. The
+  instructor later withdrew the unaided-authoring restriction, and the criteria
+  remain transparently identified as AI-authored.
 
 **Repository URL to submit:**
 https://github.com/aphan135/ai201-project4-provenance-guard-starter-v2026

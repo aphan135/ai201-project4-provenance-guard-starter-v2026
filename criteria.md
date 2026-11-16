@@ -125,8 +125,8 @@ Rejecting malformed and oversized input before scoring gives callers a clear res
 
 ## Unit 9 — Run path and instrumentation criteria
 
-> **AI-authored draft at the user's request.** This section does not meet the
-> milestone's unaided-authoring requirement.
+> **AI-authored criteria at the user's request.** The instructor later
+> withdrew the unaided-authoring restriction.
 
 ### 1. Every successful submission has a complete run trace
 
