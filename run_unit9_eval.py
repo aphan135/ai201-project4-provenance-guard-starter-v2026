@@ -215,36 +215,45 @@ def run_restart_check(trial_number, log_path):
     finally:
         stop_service(first)
 
-    second = start_service(log_path, port)
-    try:
-        wait_for_service(second, base_url)
-        read_status, log_response = http_json(f"{base_url}/log?limit=2")
-    finally:
-        stop_service(second)
+    restart_checks = []
+    for cycle in range(1, 4):
+        restarted = start_service(log_path, port)
+        try:
+            wait_for_service(restarted, base_url)
+            read_status, log_response = http_json(f"{base_url}/log?limit=2")
+        finally:
+            stop_service(restarted)
 
-    candidates = [
-        entry for entry in log_response.get("entries", [])
-        if (
-            entry.get("event") == "run"
-            and entry.get("input", {}).get("creator_id") == creator_id
+        candidates = [
+            entry for entry in log_response.get("entries", [])
+            if (
+                entry.get("event") == "run"
+                and entry.get("input", {}).get("creator_id") == creator_id
+            )
+        ]
+        run_entry = candidates[0] if candidates else None
+        passed = (
+            status == 200
+            and isinstance(response, dict)
+            and read_status == 200
+            and run_entry is not None
+            and run_entry.get("output", {}).get("content_id") == response.get("content_id")
+            and run_entry.get("http_status") == 200
+            and all(key in run_entry for key in ("timestamp", "input", "output", "duration_ms"))
         )
-    ]
-    run_entry = candidates[0] if candidates else None
-    passed = (
-        status == 200
-        and isinstance(response, dict)
-        and read_status == 200
-        and run_entry is not None
-        and run_entry.get("output", {}).get("content_id") == response.get("content_id")
-        and run_entry.get("http_status") == 200
-        and all(key in run_entry for key in ("timestamp", "input", "output", "duration_ms"))
-    )
+        restart_checks.append({
+            "cycle": cycle,
+            "passed": passed,
+            "log_response_status": read_status,
+            "restarted_log_response": log_response,
+            "matching_run": run_entry,
+        })
     return {
-        "passed": passed,
+        "passed": sum(check["passed"] for check in restart_checks),
+        "total": len(restart_checks),
+        "checks": [check["passed"] for check in restart_checks],
         "submit_response": response_record(status, response),
-        "log_response_status": read_status,
-        "restarted_log_response": log_response,
-        "matching_run": run_entry,
+        "restart_checks": restart_checks,
     }
 
 
@@ -422,9 +431,9 @@ def run_trial(trial_number):
         results = run_live_criteria(trial_number, audit_path)
         restart = run_restart_check(trial_number, audit_path)
         results["criteria"]["5"] = {
-            "passed": int(restart["passed"]),
-            "total": 1,
-            "checks": [restart["passed"]],
+            "passed": restart["passed"],
+            "total": restart["total"],
+            "checks": restart["checks"],
             "evidence": restart,
         }
         results["method"] = {

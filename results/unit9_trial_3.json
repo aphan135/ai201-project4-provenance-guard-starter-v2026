@@ -23,7 +23,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "d1de0f21-a823-4a8a-9962-495a7af0b733",
+              "content_id": "65485c93-6118-466e-b2c7-7ee675d37a11",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -31,7 +31,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.876+00:00",
+            "timestamp": "2026-11-16T20:57:14.199+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -44,13 +44,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "d1de0f21-a823-4a8a-9962-495a7af0b733",
+              "content_id": "65485c93-6118-466e-b2c7-7ee675d37a11",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.95,
+            "duration_ms": 0.892,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -61,7 +61,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "e7c3d56b-8207-4fa8-92f3-41fcf116229c",
+              "content_id": "d512db32-212d-4e4e-ba2f-28d36d99001a",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -69,7 +69,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.877+00:00",
+            "timestamp": "2026-11-16T20:57:14.200+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -82,13 +82,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "e7c3d56b-8207-4fa8-92f3-41fcf116229c",
+              "content_id": "d512db32-212d-4e4e-ba2f-28d36d99001a",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.396,
+            "duration_ms": 0.421,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -99,7 +99,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "04ce1825-a31d-4ae4-b233-87687d2789b7",
+              "content_id": "10d2342e-04e8-463a-afcf-e543c315dfb3",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -107,7 +107,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.878+00:00",
+            "timestamp": "2026-11-16T20:57:14.201+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -120,13 +120,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "04ce1825-a31d-4ae4-b233-87687d2789b7",
+              "content_id": "10d2342e-04e8-463a-afcf-e543c315dfb3",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.319,
+            "duration_ms": 0.31,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -137,7 +137,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "ed31e75a-98b2-48d9-8790-40f822f02bbf",
+              "content_id": "2de7d242-33b3-4efa-9274-f9c062e954df",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -145,7 +145,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.879+00:00",
+            "timestamp": "2026-11-16T20:57:14.203+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -158,13 +158,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "ed31e75a-98b2-48d9-8790-40f822f02bbf",
+              "content_id": "2de7d242-33b3-4efa-9274-f9c062e954df",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.267,
+            "duration_ms": 0.605,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -175,7 +175,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "3284902c-be2e-44eb-a3fa-e5d2c0079297",
+              "content_id": "ee142e9e-fe94-44d0-be8b-45e0a57584dd",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -183,7 +183,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.880+00:00",
+            "timestamp": "2026-11-16T20:57:14.204+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -196,13 +196,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "3284902c-be2e-44eb-a3fa-e5d2c0079297",
+              "content_id": "ee142e9e-fe94-44d0-be8b-45e0a57584dd",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.29,
+            "duration_ms": 0.372,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -213,7 +213,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "da88dab9-87bf-4c22-b1d2-29e0f2c0123b",
+              "content_id": "6c3b781f-c537-46e2-bfa2-c2360cf68936",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -221,7 +221,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.881+00:00",
+            "timestamp": "2026-11-16T20:57:14.206+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -234,13 +234,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "da88dab9-87bf-4c22-b1d2-29e0f2c0123b",
+              "content_id": "6c3b781f-c537-46e2-bfa2-c2360cf68936",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.469,
+            "duration_ms": 0.265,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -251,7 +251,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "758db9d0-bd25-487c-be84-1803755b595c",
+              "content_id": "54c3eb93-1f5f-498b-9864-7ef06a6b49d7",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -259,7 +259,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.883+00:00",
+            "timestamp": "2026-11-16T20:57:14.207+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -272,13 +272,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "758db9d0-bd25-487c-be84-1803755b595c",
+              "content_id": "54c3eb93-1f5f-498b-9864-7ef06a6b49d7",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.352,
+            "duration_ms": 0.257,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -289,7 +289,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "d520dcef-49d7-4540-a5b6-10022e94cc33",
+              "content_id": "24e97502-cc6b-4862-8f4d-b96aba1c54e9",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -297,7 +297,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.884+00:00",
+            "timestamp": "2026-11-16T20:57:14.207+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -310,13 +310,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "d520dcef-49d7-4540-a5b6-10022e94cc33",
+              "content_id": "24e97502-cc6b-4862-8f4d-b96aba1c54e9",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.283,
+            "duration_ms": 0.238,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -327,7 +327,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "6d2eba56-a963-4566-bb0d-30162da85bc5",
+              "content_id": "4662828b-a9eb-4d1c-b2db-e66dc8528eff",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -335,7 +335,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.885+00:00",
+            "timestamp": "2026-11-16T20:57:14.209+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -348,13 +348,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "6d2eba56-a963-4566-bb0d-30162da85bc5",
+              "content_id": "4662828b-a9eb-4d1c-b2db-e66dc8528eff",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.258,
+            "duration_ms": 0.284,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -365,7 +365,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "dc62a404-0b6e-4c2a-a9dc-195f5cb16cb5",
+              "content_id": "1b924414-ce14-4f02-97dd-48c10989fd1e",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -373,7 +373,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.886+00:00",
+            "timestamp": "2026-11-16T20:57:14.209+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -386,13 +386,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "dc62a404-0b6e-4c2a-a9dc-195f5cb16cb5",
+              "content_id": "1b924414-ce14-4f02-97dd-48c10989fd1e",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.528,
+            "duration_ms": 0.276,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -421,7 +421,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "31b9042e-7a10-4cde-9430-a497b4051a34",
+              "content_id": "827cfcdc-8e1c-4b79-aa08-08c640b8da5c",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -429,7 +429,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.888+00:00",
+            "timestamp": "2026-11-16T20:57:14.210+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -442,19 +442,19 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "31b9042e-7a10-4cde-9430-a497b4051a34",
+              "content_id": "827cfcdc-8e1c-4b79-aa08-08c640b8da5c",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.271,
+            "duration_ms": 0.263,
             "http_status": 200,
             "detector_model": "gpt2"
           },
           "decision": {
-            "timestamp": "2026-11-16T20:49:30.887+00:00",
-            "content_id": "31b9042e-7a10-4cde-9430-a497b4051a34",
+            "timestamp": "2026-11-16T20:57:14.210+00:00",
+            "content_id": "827cfcdc-8e1c-4b79-aa08-08c640b8da5c",
             "creator_id": "m5_t3_c2_00",
             "guess": "human",
             "model_score": 0.2,
@@ -470,7 +470,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "be03bef0-f733-4146-b305-9aa20784dcfa",
+              "content_id": "ce018cf0-afe9-487d-9bb4-4b5881fb1df1",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -478,7 +478,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.889+00:00",
+            "timestamp": "2026-11-16T20:57:14.212+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -491,19 +491,19 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "be03bef0-f733-4146-b305-9aa20784dcfa",
+              "content_id": "ce018cf0-afe9-487d-9bb4-4b5881fb1df1",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.331,
+            "duration_ms": 0.616,
             "http_status": 200,
             "detector_model": "gpt2"
           },
           "decision": {
-            "timestamp": "2026-11-16T20:49:30.888+00:00",
-            "content_id": "be03bef0-f733-4146-b305-9aa20784dcfa",
+            "timestamp": "2026-11-16T20:57:14.212+00:00",
+            "content_id": "ce018cf0-afe9-487d-9bb4-4b5881fb1df1",
             "creator_id": "m5_t3_c2_01",
             "guess": "human",
             "model_score": 0.2,
@@ -519,7 +519,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "113290ce-107d-435f-a3ba-7088b1d19f82",
+              "content_id": "eca19ce7-551b-4a74-a003-6a28d4d46d31",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -527,7 +527,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.890+00:00",
+            "timestamp": "2026-11-16T20:57:14.213+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -540,19 +540,19 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "113290ce-107d-435f-a3ba-7088b1d19f82",
+              "content_id": "eca19ce7-551b-4a74-a003-6a28d4d46d31",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.244,
+            "duration_ms": 0.232,
             "http_status": 200,
             "detector_model": "gpt2"
           },
           "decision": {
-            "timestamp": "2026-11-16T20:49:30.889+00:00",
-            "content_id": "113290ce-107d-435f-a3ba-7088b1d19f82",
+            "timestamp": "2026-11-16T20:57:14.213+00:00",
+            "content_id": "eca19ce7-551b-4a74-a003-6a28d4d46d31",
             "creator_id": "m5_t3_c2_02",
             "guess": "human",
             "model_score": 0.2,
@@ -568,7 +568,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "8ee6512d-6065-4080-a1f0-bbd242922dff",
+              "content_id": "bbe04de7-88a2-4780-a046-6ecf4ce14097",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -576,7 +576,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.891+00:00",
+            "timestamp": "2026-11-16T20:57:14.214+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -589,19 +589,19 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "8ee6512d-6065-4080-a1f0-bbd242922dff",
+              "content_id": "bbe04de7-88a2-4780-a046-6ecf4ce14097",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.237,
+            "duration_ms": 0.285,
             "http_status": 200,
             "detector_model": "gpt2"
           },
           "decision": {
-            "timestamp": "2026-11-16T20:49:30.890+00:00",
-            "content_id": "8ee6512d-6065-4080-a1f0-bbd242922dff",
+            "timestamp": "2026-11-16T20:57:14.214+00:00",
+            "content_id": "bbe04de7-88a2-4780-a046-6ecf4ce14097",
             "creator_id": "m5_t3_c2_03",
             "guess": "human",
             "model_score": 0.2,
@@ -617,7 +617,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "10b39f53-06cd-48fb-90e3-a1b63eb12917",
+              "content_id": "d71a7770-4fff-4685-82fc-f1b230d0ae14",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -625,7 +625,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.892+00:00",
+            "timestamp": "2026-11-16T20:57:14.215+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -638,19 +638,19 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "10b39f53-06cd-48fb-90e3-a1b63eb12917",
+              "content_id": "d71a7770-4fff-4685-82fc-f1b230d0ae14",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.273,
+            "duration_ms": 0.299,
             "http_status": 200,
             "detector_model": "gpt2"
           },
           "decision": {
-            "timestamp": "2026-11-16T20:49:30.891+00:00",
-            "content_id": "10b39f53-06cd-48fb-90e3-a1b63eb12917",
+            "timestamp": "2026-11-16T20:57:14.215+00:00",
+            "content_id": "d71a7770-4fff-4685-82fc-f1b230d0ae14",
             "creator_id": "m5_t3_c2_04",
             "guess": "human",
             "model_score": 0.2,
@@ -666,7 +666,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "bca0f155-d283-4e4a-9b31-60bb06857159",
+              "content_id": "ac1a16e7-82ea-4a8c-aba9-12cd0a0841d3",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -674,7 +674,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.893+00:00",
+            "timestamp": "2026-11-16T20:57:14.216+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -687,19 +687,19 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "bca0f155-d283-4e4a-9b31-60bb06857159",
+              "content_id": "ac1a16e7-82ea-4a8c-aba9-12cd0a0841d3",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.223,
+            "duration_ms": 0.239,
             "http_status": 200,
             "detector_model": "gpt2"
           },
           "decision": {
-            "timestamp": "2026-11-16T20:49:30.892+00:00",
-            "content_id": "bca0f155-d283-4e4a-9b31-60bb06857159",
+            "timestamp": "2026-11-16T20:57:14.216+00:00",
+            "content_id": "ac1a16e7-82ea-4a8c-aba9-12cd0a0841d3",
             "creator_id": "m5_t3_c2_05",
             "guess": "human",
             "model_score": 0.2,
@@ -715,7 +715,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "f6a43ce0-02b8-47d1-ad4c-831086c9ce6c",
+              "content_id": "7a7bcab2-2d00-4a1a-a8e8-52eae6233c5e",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -723,7 +723,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.893+00:00",
+            "timestamp": "2026-11-16T20:57:14.217+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -736,19 +736,19 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "f6a43ce0-02b8-47d1-ad4c-831086c9ce6c",
+              "content_id": "7a7bcab2-2d00-4a1a-a8e8-52eae6233c5e",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.23,
+            "duration_ms": 0.241,
             "http_status": 200,
             "detector_model": "gpt2"
           },
           "decision": {
-            "timestamp": "2026-11-16T20:49:30.893+00:00",
-            "content_id": "f6a43ce0-02b8-47d1-ad4c-831086c9ce6c",
+            "timestamp": "2026-11-16T20:57:14.217+00:00",
+            "content_id": "7a7bcab2-2d00-4a1a-a8e8-52eae6233c5e",
             "creator_id": "m5_t3_c2_06",
             "guess": "human",
             "model_score": 0.2,
@@ -764,7 +764,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "a528c4e2-5d73-4cab-bae6-1af6f7e97fc7",
+              "content_id": "ac3a6fbe-d375-44a8-94e2-14378eb89462",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -772,7 +772,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.894+00:00",
+            "timestamp": "2026-11-16T20:57:14.218+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -785,19 +785,19 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "a528c4e2-5d73-4cab-bae6-1af6f7e97fc7",
+              "content_id": "ac3a6fbe-d375-44a8-94e2-14378eb89462",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.224,
+            "duration_ms": 0.24,
             "http_status": 200,
             "detector_model": "gpt2"
           },
           "decision": {
-            "timestamp": "2026-11-16T20:49:30.894+00:00",
-            "content_id": "a528c4e2-5d73-4cab-bae6-1af6f7e97fc7",
+            "timestamp": "2026-11-16T20:57:14.218+00:00",
+            "content_id": "ac3a6fbe-d375-44a8-94e2-14378eb89462",
             "creator_id": "m5_t3_c2_07",
             "guess": "human",
             "model_score": 0.2,
@@ -813,7 +813,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "6daaa50e-0e27-4d02-a48e-7acc68d54988",
+              "content_id": "60f2d6f4-a53b-4f27-b640-66bb7bad4fb3",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -821,7 +821,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.895+00:00",
+            "timestamp": "2026-11-16T20:57:14.219+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -834,19 +834,19 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "6daaa50e-0e27-4d02-a48e-7acc68d54988",
+              "content_id": "60f2d6f4-a53b-4f27-b640-66bb7bad4fb3",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.229,
+            "duration_ms": 0.23,
             "http_status": 200,
             "detector_model": "gpt2"
           },
           "decision": {
-            "timestamp": "2026-11-16T20:49:30.895+00:00",
-            "content_id": "6daaa50e-0e27-4d02-a48e-7acc68d54988",
+            "timestamp": "2026-11-16T20:57:14.219+00:00",
+            "content_id": "60f2d6f4-a53b-4f27-b640-66bb7bad4fb3",
             "creator_id": "m5_t3_c2_08",
             "guess": "human",
             "model_score": 0.2,
@@ -862,7 +862,7 @@
             "body": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "b8a6531c-c0d6-4cb4-b536-08d544c015e2",
+              "content_id": "5fa664fb-5b50-45ea-8803-8f09e6eeddc0",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -870,7 +870,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.896+00:00",
+            "timestamp": "2026-11-16T20:57:14.220+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -883,19 +883,19 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "b8a6531c-c0d6-4cb4-b536-08d544c015e2",
+              "content_id": "5fa664fb-5b50-45ea-8803-8f09e6eeddc0",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.269,
+            "duration_ms": 0.395,
             "http_status": 200,
             "detector_model": "gpt2"
           },
           "decision": {
-            "timestamp": "2026-11-16T20:49:30.896+00:00",
-            "content_id": "b8a6531c-c0d6-4cb4-b536-08d544c015e2",
+            "timestamp": "2026-11-16T20:57:14.220+00:00",
+            "content_id": "5fa664fb-5b50-45ea-8803-8f09e6eeddc0",
             "creator_id": "m5_t3_c2_09",
             "guess": "human",
             "model_score": 0.2,
@@ -930,7 +930,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.897+00:00",
+            "timestamp": "2026-11-16T20:57:14.222+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -942,12 +942,12 @@
               "error": "invalid_text",
               "message": "text must be a non-empty string."
             },
-            "duration_ms": 0.223,
+            "duration_ms": 0.249,
             "http_status": 400,
             "detector_model": "gpt2"
           },
           "rejection": {
-            "timestamp": "2026-11-16T20:49:30.897+00:00",
+            "timestamp": "2026-11-16T20:57:14.221+00:00",
             "creator_id": "m5_t3_c3_0",
             "event": "rejected",
             "status": "rejected",
@@ -968,7 +968,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.899+00:00",
+            "timestamp": "2026-11-16T20:57:14.223+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -982,12 +982,12 @@
               "error": "invalid_text",
               "message": "text must be a non-empty string."
             },
-            "duration_ms": 0.346,
+            "duration_ms": 0.221,
             "http_status": 400,
             "detector_model": "gpt2"
           },
           "rejection": {
-            "timestamp": "2026-11-16T20:49:30.899+00:00",
+            "timestamp": "2026-11-16T20:57:14.223+00:00",
             "creator_id": "m5_t3_c3_1",
             "event": "rejected",
             "status": "rejected",
@@ -1008,7 +1008,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.900+00:00",
+            "timestamp": "2026-11-16T20:57:14.224+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -1022,12 +1022,12 @@
               "error": "punctuation_only_text",
               "message": "text must contain something other than punctuation or whitespace."
             },
-            "duration_ms": 0.264,
+            "duration_ms": 0.25,
             "http_status": 400,
             "detector_model": "gpt2"
           },
           "rejection": {
-            "timestamp": "2026-11-16T20:49:30.900+00:00",
+            "timestamp": "2026-11-16T20:57:14.224+00:00",
             "creator_id": "m5_t3_c3_2",
             "event": "rejected",
             "status": "rejected",
@@ -1048,7 +1048,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.901+00:00",
+            "timestamp": "2026-11-16T20:57:14.225+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -1062,12 +1062,12 @@
               "error": "text_too_long",
               "message": "text must not exceed 20000 characters."
             },
-            "duration_ms": 0.38,
+            "duration_ms": 0.331,
             "http_status": 413,
             "detector_model": "gpt2"
           },
           "rejection": {
-            "timestamp": "2026-11-16T20:49:30.901+00:00",
+            "timestamp": "2026-11-16T20:57:14.225+00:00",
             "creator_id": "m5_t3_c3_3",
             "event": "rejected",
             "status": "rejected",
@@ -1088,7 +1088,7 @@
             }
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.902+00:00",
+            "timestamp": "2026-11-16T20:57:14.226+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -1102,12 +1102,12 @@
               "error": "detector_unavailable",
               "message": "detector unavailable for test"
             },
-            "duration_ms": 0.301,
+            "duration_ms": 0.23,
             "http_status": 503,
             "detector_model": "gpt2"
           },
           "rejection": {
-            "timestamp": "2026-11-16T20:49:30.902+00:00",
+            "timestamp": "2026-11-16T20:57:14.226+00:00",
             "creator_id": "m5_t3_c3_4",
             "event": "rejected",
             "status": "rejected",
@@ -1125,7 +1125,7 @@
             "body": "<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n"
           },
           "run": {
-            "timestamp": "2026-11-16T20:49:30.905+00:00",
+            "timestamp": "2026-11-16T20:57:14.228+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -1139,7 +1139,7 @@
               "content_type": "text/html; charset=utf-8",
               "body_chars": 265
             },
-            "duration_ms": 1.685,
+            "duration_ms": 1.715,
             "http_status": 500,
             "detector_model": "gpt2"
           },
@@ -1171,7 +1171,7 @@
           "text_sha256": "591c03ababdbed44047c28ebe41499c937f260dbcf50c6e71d8eb7fae5bfbc53",
           "leaked": false,
           "run": {
-            "timestamp": "2026-11-16T20:49:30.906+00:00",
+            "timestamp": "2026-11-16T20:57:14.230+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -1184,13 +1184,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "f8154176-fc49-4182-8aac-7a200d108fd9",
+              "content_id": "ad05b806-de11-4eed-a259-9a32213e5d81",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.288,
+            "duration_ms": 0.331,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -1202,7 +1202,7 @@
           "text_sha256": "5a7fb1efdb8c8dbd0eb83774aa7a9b7a49570caaeeba347e1479be66197fad33",
           "leaked": false,
           "run": {
-            "timestamp": "2026-11-16T20:49:30.907+00:00",
+            "timestamp": "2026-11-16T20:57:14.232+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -1215,13 +1215,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "b010b005-036c-481d-ac79-b68d1c20e33e",
+              "content_id": "c26d7fb9-78d7-43e2-bc1b-e9ae29ea26c4",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.244,
+            "duration_ms": 0.246,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -1233,7 +1233,7 @@
           "text_sha256": "f9a82444d0961c7e063b1ae70e398d23346e0b2774f455c3624f7d1b995cab8a",
           "leaked": false,
           "run": {
-            "timestamp": "2026-11-16T20:49:30.909+00:00",
+            "timestamp": "2026-11-16T20:57:14.233+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -1246,13 +1246,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "a69c1807-c748-4a23-b240-7cb4b92fe902",
+              "content_id": "8997daf3-4d84-4907-ace7-a866ca149839",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.254,
+            "duration_ms": 0.247,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -1264,7 +1264,7 @@
           "text_sha256": "6ddc35d0b28e8cc63576769a62e2f14f2ccc90afd243300286e9e581edaaab9b",
           "leaked": false,
           "run": {
-            "timestamp": "2026-11-16T20:49:30.910+00:00",
+            "timestamp": "2026-11-16T20:57:14.234+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -1277,100 +1277,7 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "3685b6a3-fcd2-4804-8601-74f3cdc5e051",
-              "guess": "human",
-              "label": "We think this was probably written by a person.",
-              "model_score": 0.2,
-              "style_score": 0.3
-            },
-            "duration_ms": 0.238,
-            "http_status": 200,
-            "detector_model": "gpt2"
-          }
-        },
-        {
-          "passed": true,
-          "creator_id": "m5_t3_c4_04",
-          "text_length": 40,
-          "text_sha256": "131ac938787814b1900ab4fe67182bb2ea57820d20cf9eb0a939316986d67ecd",
-          "leaked": false,
-          "run": {
-            "timestamp": "2026-11-16T20:49:30.911+00:00",
-            "event": "run",
-            "route": "/submit",
-            "input": {
-              "creator_id": "m5_t3_c4_04",
-              "text_present": true,
-              "text_type": "str",
-              "text_length": 40,
-              "text_sha256": "131ac938787814b1900ab4fe67182bb2ea57820d20cf9eb0a939316986d67ecd"
-            },
-            "output": {
-              "combined_score": 0.225,
-              "confidence": 0.55,
-              "content_id": "125ef46a-b98a-4ed7-bcc5-95a20ab55102",
-              "guess": "human",
-              "label": "We think this was probably written by a person.",
-              "model_score": 0.2,
-              "style_score": 0.3
-            },
-            "duration_ms": 0.23,
-            "http_status": 200,
-            "detector_model": "gpt2"
-          }
-        },
-        {
-          "passed": true,
-          "creator_id": "m5_t3_c4_05",
-          "text_length": 40,
-          "text_sha256": "dd7b0a80fd0461ba1c16468bb284fb69d3a2d41a67ad6b6604b59ceaf19d1bae",
-          "leaked": false,
-          "run": {
-            "timestamp": "2026-11-16T20:49:30.912+00:00",
-            "event": "run",
-            "route": "/submit",
-            "input": {
-              "creator_id": "m5_t3_c4_05",
-              "text_present": true,
-              "text_type": "str",
-              "text_length": 40,
-              "text_sha256": "dd7b0a80fd0461ba1c16468bb284fb69d3a2d41a67ad6b6604b59ceaf19d1bae"
-            },
-            "output": {
-              "combined_score": 0.225,
-              "confidence": 0.55,
-              "content_id": "09dce86d-c5dc-4ebc-a41f-c75b34be05b9",
-              "guess": "human",
-              "label": "We think this was probably written by a person.",
-              "model_score": 0.2,
-              "style_score": 0.3
-            },
-            "duration_ms": 0.233,
-            "http_status": 200,
-            "detector_model": "gpt2"
-          }
-        },
-        {
-          "passed": true,
-          "creator_id": "m5_t3_c4_06",
-          "text_length": 40,
-          "text_sha256": "903d7a69976638d148c7b0c64fed00ead126696a452f5269506da4b2f54b0ca2",
-          "leaked": false,
-          "run": {
-            "timestamp": "2026-11-16T20:49:30.913+00:00",
-            "event": "run",
-            "route": "/submit",
-            "input": {
-              "creator_id": "m5_t3_c4_06",
-              "text_present": true,
-              "text_type": "str",
-              "text_length": 40,
-              "text_sha256": "903d7a69976638d148c7b0c64fed00ead126696a452f5269506da4b2f54b0ca2"
-            },
-            "output": {
-              "combined_score": 0.225,
-              "confidence": 0.55,
-              "content_id": "81ab2e19-fad9-4ff2-8b31-807f2ed64a8c",
+              "content_id": "f0ebe5d5-2681-4292-afd8-215706e42085",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
@@ -1383,12 +1290,105 @@
         },
         {
           "passed": true,
+          "creator_id": "m5_t3_c4_04",
+          "text_length": 40,
+          "text_sha256": "131ac938787814b1900ab4fe67182bb2ea57820d20cf9eb0a939316986d67ecd",
+          "leaked": false,
+          "run": {
+            "timestamp": "2026-11-16T20:57:14.235+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t3_c4_04",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 40,
+              "text_sha256": "131ac938787814b1900ab4fe67182bb2ea57820d20cf9eb0a939316986d67ecd"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "5a1604db-830e-4415-b282-4abf0ab7b31f",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.226,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "passed": true,
+          "creator_id": "m5_t3_c4_05",
+          "text_length": 40,
+          "text_sha256": "dd7b0a80fd0461ba1c16468bb284fb69d3a2d41a67ad6b6604b59ceaf19d1bae",
+          "leaked": false,
+          "run": {
+            "timestamp": "2026-11-16T20:57:14.236+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t3_c4_05",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 40,
+              "text_sha256": "dd7b0a80fd0461ba1c16468bb284fb69d3a2d41a67ad6b6604b59ceaf19d1bae"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "d8e6067d-08ea-4c94-9833-1651e623fdc2",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.23,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "passed": true,
+          "creator_id": "m5_t3_c4_06",
+          "text_length": 40,
+          "text_sha256": "903d7a69976638d148c7b0c64fed00ead126696a452f5269506da4b2f54b0ca2",
+          "leaked": false,
+          "run": {
+            "timestamp": "2026-11-16T20:57:14.237+00:00",
+            "event": "run",
+            "route": "/submit",
+            "input": {
+              "creator_id": "m5_t3_c4_06",
+              "text_present": true,
+              "text_type": "str",
+              "text_length": 40,
+              "text_sha256": "903d7a69976638d148c7b0c64fed00ead126696a452f5269506da4b2f54b0ca2"
+            },
+            "output": {
+              "combined_score": 0.225,
+              "confidence": 0.55,
+              "content_id": "2f849460-70c1-4a66-af8d-c0bdb41e78ab",
+              "guess": "human",
+              "label": "We think this was probably written by a person.",
+              "model_score": 0.2,
+              "style_score": 0.3
+            },
+            "duration_ms": 0.226,
+            "http_status": 200,
+            "detector_model": "gpt2"
+          }
+        },
+        {
+          "passed": true,
           "creator_id": "m5_t3_c4_07",
           "text_length": 40,
           "text_sha256": "6e082db71a0f36da7d9a4f6985c94f2913832ec318dda1abc3325d5d1a6a05da",
           "leaked": false,
           "run": {
-            "timestamp": "2026-11-16T20:49:30.914+00:00",
+            "timestamp": "2026-11-16T20:57:14.238+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -1401,13 +1401,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "9760b0e9-421a-4cb3-b07b-3645b6622c65",
+              "content_id": "c100806b-bd0a-4f95-bf00-bb5d0b52529c",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.223,
+            "duration_ms": 0.302,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -1419,7 +1419,7 @@
           "text_sha256": "7a2c9143c5bf7193f9719fed2b461b31daa340f65418553fc9e491f5047506c4",
           "leaked": false,
           "run": {
-            "timestamp": "2026-11-16T20:49:30.915+00:00",
+            "timestamp": "2026-11-16T20:57:14.239+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -1432,13 +1432,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "6b583673-a6ef-428b-a548-ccb6d49eb54e",
+              "content_id": "0db092cd-7f11-41cd-95de-1b0094d7c497",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.408,
+            "duration_ms": 0.233,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -1450,7 +1450,7 @@
           "text_sha256": "9f87af3c8192afc37554db25360780f6da34813f67f79a8ec3a63615b917dbc4",
           "leaked": false,
           "run": {
-            "timestamp": "2026-11-16T20:49:30.917+00:00",
+            "timestamp": "2026-11-16T20:57:14.241+00:00",
             "event": "run",
             "route": "/submit",
             "input": {
@@ -1463,13 +1463,13 @@
             "output": {
               "combined_score": 0.225,
               "confidence": 0.55,
-              "content_id": "207cdf77-614c-46f1-813f-3869051b3803",
+              "content_id": "de08b2d7-36ea-4a0a-b52a-7e9c1bf259ff",
               "guess": "human",
               "label": "We think this was probably written by a person.",
               "model_score": 0.2,
               "style_score": 0.3
             },
-            "duration_ms": 0.231,
+            "duration_ms": 0.229,
             "http_status": 200,
             "detector_model": "gpt2"
           }
@@ -1477,43 +1477,81 @@
       ]
     },
     "5": {
-      "passed": 1,
-      "total": 1,
+      "passed": 3,
+      "total": 3,
       "checks": [
+        true,
+        true,
         true
       ],
       "evidence": {
-        "passed": true,
+        "passed": 3,
+        "total": 3,
+        "checks": [
+          true,
+          true,
+          true
+        ],
         "submit_response": {
           "status": 200,
           "body": {
             "combined_score": 0.225,
             "confidence": 0.55,
-            "content_id": "41208020-3519-495e-8d5a-c0093dac41d2",
+            "content_id": "d01a5ce7-f002-443e-9eb7-145abd822739",
             "guess": "human",
             "label": "We think this was probably written by a person.",
             "model_score": 0.2,
             "style_score": 0.3
           }
         },
-        "log_response_status": 200,
-        "restarted_log_response": {
-          "count": 2,
-          "entries": [
-            {
-              "combined_score": 0.225,
-              "content_id": "41208020-3519-495e-8d5a-c0093dac41d2",
-              "creator_id": "m5_t3_restart",
-              "guess": "human",
-              "label": "We think this was probably written by a person.",
-              "model_score": 0.2,
-              "status": "decided",
-              "style_score": 0.3,
-              "timestamp": "2026-11-16T20:49:31.135+00:00"
+        "restart_checks": [
+          {
+            "cycle": 1,
+            "passed": true,
+            "log_response_status": 200,
+            "restarted_log_response": {
+              "count": 2,
+              "entries": [
+                {
+                  "combined_score": 0.225,
+                  "content_id": "d01a5ce7-f002-443e-9eb7-145abd822739",
+                  "creator_id": "m5_t3_restart",
+                  "guess": "human",
+                  "label": "We think this was probably written by a person.",
+                  "model_score": 0.2,
+                  "status": "decided",
+                  "style_score": 0.3,
+                  "timestamp": "2026-11-16T20:57:14.457+00:00"
+                },
+                {
+                  "detector_model": "gpt2",
+                  "duration_ms": 0.847,
+                  "event": "run",
+                  "http_status": 200,
+                  "input": {
+                    "creator_id": "m5_t3_restart",
+                    "text_length": 64,
+                    "text_present": true,
+                    "text_sha256": "fc3d5e6ee2b6ecb3a46232c58ed6bf8b586939cada5cd1c77d3d67dd366f53d4",
+                    "text_type": "str"
+                  },
+                  "output": {
+                    "combined_score": 0.225,
+                    "confidence": 0.55,
+                    "content_id": "d01a5ce7-f002-443e-9eb7-145abd822739",
+                    "guess": "human",
+                    "label": "We think this was probably written by a person.",
+                    "model_score": 0.2,
+                    "style_score": 0.3
+                  },
+                  "route": "/submit",
+                  "timestamp": "2026-11-16T20:57:14.457+00:00"
+                }
+              ]
             },
-            {
+            "matching_run": {
               "detector_model": "gpt2",
-              "duration_ms": 0.858,
+              "duration_ms": 0.847,
               "event": "run",
               "http_status": 200,
               "input": {
@@ -1526,41 +1564,155 @@
               "output": {
                 "combined_score": 0.225,
                 "confidence": 0.55,
-                "content_id": "41208020-3519-495e-8d5a-c0093dac41d2",
+                "content_id": "d01a5ce7-f002-443e-9eb7-145abd822739",
                 "guess": "human",
                 "label": "We think this was probably written by a person.",
                 "model_score": 0.2,
                 "style_score": 0.3
               },
               "route": "/submit",
-              "timestamp": "2026-11-16T20:49:31.135+00:00"
+              "timestamp": "2026-11-16T20:57:14.457+00:00"
             }
-          ]
-        },
-        "matching_run": {
-          "detector_model": "gpt2",
-          "duration_ms": 0.858,
-          "event": "run",
-          "http_status": 200,
-          "input": {
-            "creator_id": "m5_t3_restart",
-            "text_length": 64,
-            "text_present": true,
-            "text_sha256": "fc3d5e6ee2b6ecb3a46232c58ed6bf8b586939cada5cd1c77d3d67dd366f53d4",
-            "text_type": "str"
           },
-          "output": {
-            "combined_score": 0.225,
-            "confidence": 0.55,
-            "content_id": "41208020-3519-495e-8d5a-c0093dac41d2",
-            "guess": "human",
-            "label": "We think this was probably written by a person.",
-            "model_score": 0.2,
-            "style_score": 0.3
+          {
+            "cycle": 2,
+            "passed": true,
+            "log_response_status": 200,
+            "restarted_log_response": {
+              "count": 2,
+              "entries": [
+                {
+                  "combined_score": 0.225,
+                  "content_id": "d01a5ce7-f002-443e-9eb7-145abd822739",
+                  "creator_id": "m5_t3_restart",
+                  "guess": "human",
+                  "label": "We think this was probably written by a person.",
+                  "model_score": 0.2,
+                  "status": "decided",
+                  "style_score": 0.3,
+                  "timestamp": "2026-11-16T20:57:14.457+00:00"
+                },
+                {
+                  "detector_model": "gpt2",
+                  "duration_ms": 0.847,
+                  "event": "run",
+                  "http_status": 200,
+                  "input": {
+                    "creator_id": "m5_t3_restart",
+                    "text_length": 64,
+                    "text_present": true,
+                    "text_sha256": "fc3d5e6ee2b6ecb3a46232c58ed6bf8b586939cada5cd1c77d3d67dd366f53d4",
+                    "text_type": "str"
+                  },
+                  "output": {
+                    "combined_score": 0.225,
+                    "confidence": 0.55,
+                    "content_id": "d01a5ce7-f002-443e-9eb7-145abd822739",
+                    "guess": "human",
+                    "label": "We think this was probably written by a person.",
+                    "model_score": 0.2,
+                    "style_score": 0.3
+                  },
+                  "route": "/submit",
+                  "timestamp": "2026-11-16T20:57:14.457+00:00"
+                }
+              ]
+            },
+            "matching_run": {
+              "detector_model": "gpt2",
+              "duration_ms": 0.847,
+              "event": "run",
+              "http_status": 200,
+              "input": {
+                "creator_id": "m5_t3_restart",
+                "text_length": 64,
+                "text_present": true,
+                "text_sha256": "fc3d5e6ee2b6ecb3a46232c58ed6bf8b586939cada5cd1c77d3d67dd366f53d4",
+                "text_type": "str"
+              },
+              "output": {
+                "combined_score": 0.225,
+                "confidence": 0.55,
+                "content_id": "d01a5ce7-f002-443e-9eb7-145abd822739",
+                "guess": "human",
+                "label": "We think this was probably written by a person.",
+                "model_score": 0.2,
+                "style_score": 0.3
+              },
+              "route": "/submit",
+              "timestamp": "2026-11-16T20:57:14.457+00:00"
+            }
           },
-          "route": "/submit",
-          "timestamp": "2026-11-16T20:49:31.135+00:00"
-        }
+          {
+            "cycle": 3,
+            "passed": true,
+            "log_response_status": 200,
+            "restarted_log_response": {
+              "count": 2,
+              "entries": [
+                {
+                  "combined_score": 0.225,
+                  "content_id": "d01a5ce7-f002-443e-9eb7-145abd822739",
+                  "creator_id": "m5_t3_restart",
+                  "guess": "human",
+                  "label": "We think this was probably written by a person.",
+                  "model_score": 0.2,
+                  "status": "decided",
+                  "style_score": 0.3,
+                  "timestamp": "2026-11-16T20:57:14.457+00:00"
+                },
+                {
+                  "detector_model": "gpt2",
+                  "duration_ms": 0.847,
+                  "event": "run",
+                  "http_status": 200,
+                  "input": {
+                    "creator_id": "m5_t3_restart",
+                    "text_length": 64,
+                    "text_present": true,
+                    "text_sha256": "fc3d5e6ee2b6ecb3a46232c58ed6bf8b586939cada5cd1c77d3d67dd366f53d4",
+                    "text_type": "str"
+                  },
+                  "output": {
+                    "combined_score": 0.225,
+                    "confidence": 0.55,
+                    "content_id": "d01a5ce7-f002-443e-9eb7-145abd822739",
+                    "guess": "human",
+                    "label": "We think this was probably written by a person.",
+                    "model_score": 0.2,
+                    "style_score": 0.3
+                  },
+                  "route": "/submit",
+                  "timestamp": "2026-11-16T20:57:14.457+00:00"
+                }
+              ]
+            },
+            "matching_run": {
+              "detector_model": "gpt2",
+              "duration_ms": 0.847,
+              "event": "run",
+              "http_status": 200,
+              "input": {
+                "creator_id": "m5_t3_restart",
+                "text_length": 64,
+                "text_present": true,
+                "text_sha256": "fc3d5e6ee2b6ecb3a46232c58ed6bf8b586939cada5cd1c77d3d67dd366f53d4",
+                "text_type": "str"
+              },
+              "output": {
+                "combined_score": 0.225,
+                "confidence": 0.55,
+                "content_id": "d01a5ce7-f002-443e-9eb7-145abd822739",
+                "guess": "human",
+                "label": "We think this was probably written by a person.",
+                "model_score": 0.2,
+                "style_score": 0.3
+              },
+              "route": "/submit",
+              "timestamp": "2026-11-16T20:57:14.457+00:00"
+            }
+          }
+        ]
       }
     }
   },

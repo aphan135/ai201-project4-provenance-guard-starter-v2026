@@ -429,16 +429,39 @@ time, not an API charge or a pricing-page estimate.
 
 ## Unit 9 — Three Evaluation Trials
 
-Ran all five instrumentation criteria in three separate trials. Every target
-was met in every trial: successful trace completeness `10/10`, response/trace
-matching `10/10`, failure cases `6/6`, sentinel privacy `10/10`, and restart
-persistence `1/1`. The requests went over HTTP to the local Flask service.
-Deterministic local signal stubs isolated route and logging behavior; these
-trials do not measure real model behavior. The five-row run log and actual
-responses/audit records are in
+The original Milestone 5 run and the Milestone 6 follow-up both ran all five
+criteria three times over HTTP to the local Flask service. Deterministic local
+signal stubs isolated route and logging behavior; neither set measures real
+model behavior.
+
+| Criterion | Before: Run 1 / 2 / 3 | After: Run 1 / 2 / 3 | Verdict |
+|---|---|---|---|
+| 1. Complete run trace for successful submissions (10 of 10) | 10/10 · 10/10 · 10/10 | 10/10 · 10/10 · 10/10 | MET |
+| 2. Trace output matches caller response (10 of 10) | 10/10 · 10/10 · 10/10 | 10/10 · 10/10 · 10/10 | MET |
+| 3. Failed submissions leave matching traces (all 6 cases) | 6/6 · 6/6 · 6/6 | 6/6 · 6/6 · 6/6 | MET |
+| 4. Run traces do not expose submitted text (10 of 10) | 10/10 · 10/10 · 10/10 | 10/10 · 10/10 · 10/10 | MET |
+| 5. Run trace survives restart | 1/1 · 1/1 · 1/1 | 3/3 · 3/3 · 3/3 | MET |
+
+**Diagnosis and improvement:** There were no misses to diagnose. The original
+targets for criteria 1–4 already required every case to pass. Criterion 5's
+one-restart target was comparatively weak: it checked one clean lifecycle per
+trial, not whether the same record remained readable through repeated
+restarts. I tightened that follow-up to three consecutive stop/restart/read
+cycles per trial. All nine reads returned the same record. This improved the
+evidence for persistence; it did not change the service implementation, so I
+cannot claim an application behavior improvement.
+
+The original run log and actual outputs are in
 [`results/unit9_trial_results.md`](./results/unit9_trial_results.md); the
-complete evidence is in the three linked trial JSON files there. Run the same
-evaluation with `python run_unit9_eval.py`.
+tightened follow-up, with actual output for each criterion, is in
+[`results/unit9_trial_after_results.md`](./results/unit9_trial_after_results.md).
+The evaluator is [`run_unit9_eval.py`](./run_unit9_eval.py). Before-run JSON is
+saved as [`unit9_trial_before_1.json`](./results/unit9_trial_before_1.json),
+[`unit9_trial_before_2.json`](./results/unit9_trial_before_2.json), and
+[`unit9_trial_before_3.json`](./results/unit9_trial_before_3.json); after-run
+JSON is [`unit9_trial_1.json`](./results/unit9_trial_1.json),
+[`unit9_trial_2.json`](./results/unit9_trial_2.json), and
+[`unit9_trial_3.json`](./results/unit9_trial_3.json).
 
 ---
 

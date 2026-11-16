@@ -1,17 +1,18 @@
-# Unit 9 — Three evaluation trials
+# Unit 9 — Milestone 5 baseline (before tightening)
 
-The same five criteria and test cases were run three times, with no changes
-between trials. Each trial used a fresh temporary JSONL audit file and sent
-requests over HTTP to the local Flask service on loopback. Deterministic local
-stubs returned fixed detector and stylometry scores; no external model or API
-was called. This isolates route, trace, rejection, privacy, and persistence
-behavior, but does not measure real model behavior.
+This is the original Milestone 5 run: each trial checked persistence after one
+service restart. The five criteria and test cases were run three times, with
+no changes between trials. Each trial used a fresh temporary JSONL audit file
+and sent requests over HTTP to the local Flask service on loopback.
+Deterministic local stubs returned fixed detector and stylometry scores; no
+external model or API was called. This isolates route, trace, rejection,
+privacy, and persistence behavior, but does not measure real model behavior.
 
-The evaluator is [`run_unit9_eval.py`](../run_unit9_eval.py). Complete responses,
-trace records, failure records, and per-case check results are saved in
-[`unit9_trial_1.json`](./unit9_trial_1.json),
-[`unit9_trial_2.json`](./unit9_trial_2.json), and
-[`unit9_trial_3.json`](./unit9_trial_3.json).
+Complete baseline responses, trace records, failure records, and per-case
+check results are saved in
+[`unit9_trial_before_1.json`](./unit9_trial_before_1.json),
+[`unit9_trial_before_2.json`](./unit9_trial_before_2.json), and
+[`unit9_trial_before_3.json`](./unit9_trial_before_3.json).
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---:|---:|---:|---|
