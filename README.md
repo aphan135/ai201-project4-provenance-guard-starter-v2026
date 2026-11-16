@@ -38,6 +38,10 @@
 
 Provenance Guard gives a text-only estimate of whether a submission may be AI-generated. It combines a local language-model predictability score with a separate stylometry score, explains the result with a plain-language label, and records the decision so a writer can appeal. It cannot prove who authored text.
 
+## The Shape
+
+I am extending Provenance Guard with **Shape B — harden against failure**. I will add one pre-scoring validation path to `POST /submit`: reject text made only of punctuation and whitespace with HTTP 400 and a rejection audit event, before either scoring signal runs. This addresses a known failure where punctuation-only input currently passes the non-empty check and is scored. Out of scope: handling other unusual text such as control characters, emoji-only input, or multilingual/RTL text; changing either detector signal or the scoring thresholds; and redesigning the interface.
+
 <!-- The path a submission takes, from arriving to the label a reader sees.
      Six or seven steps — this is the trace you wrote in Milestone 1. -->
 
