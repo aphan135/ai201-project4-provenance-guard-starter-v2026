@@ -24,6 +24,7 @@ Routes:
     GET  /health      is the service up, and is the model loaded
 """
 
+import unicodedata
 import uuid
 
 from flask import Flask, jsonify, request
@@ -32,6 +33,13 @@ import audit
 import config
 
 app = Flask(__name__)
+
+
+def _is_punctuation_only(text: str) -> bool:
+    return all(
+        character.isspace() or unicodedata.category(character).startswith("P")
+        for character in text
+    )
 
 
 # ── Rate limiting — UNIT 8 ────────────────────────────────────────────────────
@@ -200,6 +208,12 @@ def submit():
             400,
             "invalid_creator_id",
             "creator_id must not exceed 128 characters.",
+        )
+    if _is_punctuation_only(text):
+        return reject(
+            400,
+            "punctuation_only_text",
+            "text must contain something other than punctuation or whitespace.",
         )
 
     import detector
