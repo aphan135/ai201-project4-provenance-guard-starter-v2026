@@ -29,7 +29,7 @@ _lock = threading.Lock()
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
 
 
 def log_decision(
@@ -108,6 +108,27 @@ def log_rejection(creator_id: str, reason: str, **extra) -> dict:
         "event": "rejected",
         "status": "rejected",
         "reason": reason,
+        **extra,
+    })
+
+
+def log_run(
+    route: str,
+    input_data: dict,
+    output_data: dict,
+    duration_ms: float,
+    http_status: int,
+    **extra,
+) -> dict:
+    """Write one structured request trace for a submission run."""
+    return _append({
+        "timestamp": _now(),
+        "event": "run",
+        "route": route,
+        "input": input_data,
+        "output": output_data,
+        "duration_ms": round(duration_ms, 3),
+        "http_status": http_status,
         **extra,
     })
 

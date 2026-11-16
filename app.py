@@ -24,10 +24,12 @@ Routes:
     GET  /health      is the service up, and is the model loaded
 """
 
+import hashlib
+import time
 import unicodedata
 import uuid
 
-from flask import Flask, jsonify, request
+from flask import Flask, g, jsonify, request
 
 import audit
 import config
@@ -39,6 +41,73 @@ def _is_punctuation_only(text: str) -> bool:
     return all(
         character.isspace() or unicodedata.category(character).startswith("P")
         for character in text
+    )
+
+
+def _summarize_submit_input(payload) -> dict:
+    if not isinstance(payload, dict):
+        return {
+            "json_type": type(payload).__name__ if payload is not None else "missing_or_invalid",
+        }
+
+    text = payload.get("text")
+    summary = {
+        "creator_id": payload.get("creator_id"),
+        "text_present": "text" in payload,
+        "text_type": type(text).__name__ if "text" in payload else "missing",
+    }
+    if isinstance(text, str):
+        summary["text_length"] = len(text)
+        summary["text_sha256"] = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    return summary
+
+
+@app.before_request
+def start_submit_timer():
+    if request.endpoint == "submit":
+        g.submit_run_started_at = time.perf_counter()
+
+
+@app.after_request
+def log_submit_run(response):
+    started_at = getattr(g, "submit_run_started_at", None)
+    if started_at is None:
+        return response
+
+    output = response.get_json(silent=True)
+    if not isinstance(output, dict):
+        output = {
+            "content_type": response.content_type,
+            "body_chars": len(response.get_data()),
+        }
+    audit.log_run(
+        route=request.path,
+        input_data=_summarize_submit_input(request.get_json(silent=True)),
+        output_data=output,
+        duration_ms=(time.perf_counter() - started_at) * 1000,
+        http_status=response.status_code,
+        detector_model=config.DETECTOR_MODEL,
+    )
+    g.submit_run_logged = True
+    return response
+
+
+@app.teardown_request
+def log_submit_exception(exc):
+    started_at = getattr(g, "submit_run_started_at", None)
+    if started_at is None or exc is None or getattr(g, "submit_run_logged", False):
+        return
+
+    audit.log_run(
+        route=request.path,
+        input_data=_summarize_submit_input(request.get_json(silent=True)),
+        output_data={
+            "error": "internal_error",
+            "error_type": type(exc).__name__,
+        },
+        duration_ms=(time.perf_counter() - started_at) * 1000,
+        http_status=500,
+        detector_model=config.DETECTOR_MODEL,
     )
 
 
